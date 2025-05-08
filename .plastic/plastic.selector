@@ -1,0 +1,4 @@
+repository "Guld Front Desk@aky2000kr@cloud"
+  path "/"
+    br "/main"
+    co "/main"
