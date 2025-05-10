@@ -4,10 +4,14 @@ using TMPro;
 
 public class Script_TimeManager : MonoBehaviour
 {
+    public static Script_TimeManager Instance { get; private set; }
+
     [SerializeField]
     private RectTransform dial;
     [SerializeField]
-    private TMP_Text text;
+    private TMP_Text timeOfDayText;
+    [SerializeField]
+    private TMP_Text dayCountText;
 
     [SerializeField]
     private float totalDayDuration = 60f;
@@ -15,6 +19,18 @@ public class Script_TimeManager : MonoBehaviour
     public event Action OnDayEnded;
     private float currentTime = 0f;
     private bool isDayRunning = false;
+    private int dayCount = 0;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject); 
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject); 
+    }
 
     void Start()
     {
@@ -36,8 +52,8 @@ public class Script_TimeManager : MonoBehaviour
         // Update text field with current time phase
         TimePhase currentPhase = GetCurrentTimePhase();
 
-        text.text = currentPhase.ToString();
-
+        timeOfDayText.text = currentPhase.ToString();
+        dayCountText.text = "Day " + dayCount.ToString();
 
         if (currentTime >= (totalDayDuration * 0.5f))
         {
@@ -47,14 +63,15 @@ public class Script_TimeManager : MonoBehaviour
 
     public void StartDay()
     {
+        dayCount++;
         currentTime = 0f;
         isDayRunning = true;
         dial.localRotation = Quaternion.Euler(0, 0, 0);
+        Script_AdventurerManager.Instance.UpdateAvailableAdventurers();
     }
     public void EndDay()
     {
         isDayRunning = false;
-        Debug.Log("Day has ended!");
         OnDayEnded?.Invoke();
     }
 

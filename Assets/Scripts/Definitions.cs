@@ -1,11 +1,9 @@
 using UnityEngine;
-using GFD.Adventurer;
-using GFD.Quest;
 public enum TimePhase { Morning, Afternoon, Evening }
 
 namespace GFD.Adventurer
 {
-    public enum  Perspective
+    public enum Perspective
     {
         Front,
         Side
@@ -17,7 +15,6 @@ namespace GFD.Adventurer
     }
     public enum State
     {
-        Idle,
         InQuest,
         Resting,
         Dead
@@ -31,7 +28,6 @@ namespace GFD.Adventurer
         Ranger,
         Paladin
     }
-
     public enum Personality
     {
         Brave,
@@ -41,7 +37,6 @@ namespace GFD.Adventurer
         Cheerful,
         Talkative
     }
-
     public enum Rank
     {
         Bronze,
@@ -51,7 +46,6 @@ namespace GFD.Adventurer
         Diamond,
         Adamantium
     }
-
     public enum Race
     {
         Human,
@@ -63,7 +57,6 @@ namespace GFD.Adventurer
         Angel,
         Dragon
     }
-
     public enum Mood
     {
         Happy,
@@ -93,8 +86,40 @@ namespace GFD.Adventurer
         Crippled,
         Dead
     }
-}
 
+    [System.Serializable]
+    public class AdventurerData
+    {
+        [Header("Identity")]
+        public string adventurerId;
+        public string adventurerName;
+        public Class adventurerClass;
+        public Gender gender;
+        public Race race;
+        public Personality personality;
+        public Rank rank;
+        public Background background;
+
+        [Header("Visual")]// filename without path
+        public string portrait;
+
+        [Header("Stats")]
+        public int strength;
+        public int agility;
+        public int intelligence;
+        public int endurance;
+        public int experience;
+
+        [Header("Flags")]
+        public int questCount;
+        public bool isSponsored;
+        public State currentState;
+        public InjuryStatus injuryStatus;
+        public Mood mood;
+
+        public int currQuestID;
+    }
+}
 
 namespace GFD.Quest
 {
@@ -114,75 +139,27 @@ namespace GFD.Quest
         Hard,
         Deadly
     }
+
+    public enum QuestStatus
+    {
+        Pending,
+        Active,
+        Completed,
+        Failed
+    }
+
+    [System.Serializable]
+    public class QuestData
+    {
+        [Header("Identity")]
+        public string questId;
+        public string questName;
+        public string description;
+        public string assignedAdventurerId;
+        public QuestType questType;
+        public QuestDifficulty difficulty;
+        public QuestStatus status;
+        public int reward;
+        public int duration;
+    }
 }
-
-[System.Serializable]
-public class QuestData
-{
-    public string questName;
-    public string description;
-    public QuestType questType;
-    public QuestDifficulty difficulty;
-    public int reward;
-    public int duration;
-    public int maxAdventurers;
-    public int minAdventurers;
-
-    [Header("Flags")]
-    public bool isActive;
-    public bool isCompleted;
-}
-
-[System.Serializable]
-public class AdventurerData
-{
-    [Header("Identity")]
-    public string adventurerName;
-    public Class adventurerClass;
-    public Gender gender;
-    public Perspective perspective;
-    public Race race;
-    public Personality personality;
-    public Rank rank;
-    public Background background;
-
-    public VisualData visualData;
-
-    [Header("Visual")]// filename without path
-    public string bodySprite;
-    public string headSprite;
-    public string hairSprite;
-    public string eyesSprite;
-    public string mouthSprite;
-
-    public Color skinColor;
-    public Color hairColor;
-
-    [Header("Stats")]
-    public int strength;
-    public int agility;
-    public int intelligence;
-    public int endurance;
-
-    [Header("Flags")]
-    public int questCount;
-    public bool isSponsored;
-    public State currentState;
-    public InjuryStatus injuryStatus;
-    public Mood mood;
-
-    public int currQuestID;
-}
-
-public struct VisualData
-{
-    public string bodySprite;
-    public string headSprite;
-    public string eyesSprite;
-    public string mouthSprite;
-    public string hairSprite;
-    public Color skinColor;
-    public Color hairColor;
-}
-
-

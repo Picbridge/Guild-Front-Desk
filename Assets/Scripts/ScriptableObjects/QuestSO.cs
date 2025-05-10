@@ -1,16 +1,26 @@
 using UnityEngine;
+using GFD.Quest;
+using System;
 
-public class QuestSO : MonoBehaviour
+[CreateAssetMenu(fileName = "New Quest", menuName = "Guild/Quest")]
+public class QuestSO : ScriptableObject
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public QuestData data;
+    private void OnEnable()
     {
-        
+
+        data.questId = Guid.NewGuid().ToString();
+#if UNITY_EDITOR
+        UnityEditor.EditorUtility.SetDirty(this);
+#endif
     }
 
-    // Update is called once per frame
-    void Update()
+    // Instead of showing a hidden integer field, let's add a read-only display
+#if UNITY_EDITOR
+    private void OnValidate()
     {
-        
+        data.questId = Guid.NewGuid().ToString();
+        UnityEditor.EditorUtility.SetDirty(this);
     }
+#endif
 }
