@@ -10,7 +10,7 @@ namespace GFD.Utilities
 {
     public static class GeminiQuestGenerator
     {
-        private static readonly string apiKey = "AIzaSyDTZsTqU0dGB1NKNP31GRHT6HiPyEuzpYo"; // Store this securely, perhaps in a config file
+        private static readonly string apiKey = ""; // Store this securely, perhaps in a config file
         private static readonly string geminiApiEndpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent";
 
         [Serializable]
