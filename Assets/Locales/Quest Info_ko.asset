@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Quest Info_ko
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: ko
+  m_SharedData: {fileID: 11400000, guid: 12797b42551e0fb459c989522a6cd0d7, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 56356966400
+    m_Localized: "\uACFC\uC218\uC6D0 \uAE38 \uC778\uADFC \uB3C4\uC801 \uCC98\uCE58"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 725826605056
+    m_Localized: "\uACFC\uC218\uC6D0 \uAE38\uC5D0\uC11C \uACFC\uC77C \uC218\uC1A1\uD488\uC774
+      \uB3C4\uB451\uB9DE\uC558\uC2B5\uB2C8\uB2E4. \uB3C4\uC801\uB4E4\uC744 \uCAD3\uC544\uB0B4\uC2ED\uC2DC\uC624."
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

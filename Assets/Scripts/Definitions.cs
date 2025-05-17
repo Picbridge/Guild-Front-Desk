@@ -1,6 +1,12 @@
 using UnityEngine;
 public enum TimePhase { Morning, Afternoon, Evening }
 
+public static class GlobalConstants
+{
+    public const string spriteDirectory = "Sprites/Adventurers/";
+    public const string adventurerIdDirectory = "AdventurerId/";
+}
+
 namespace GFD.Adventurer
 {
     public enum Perspective

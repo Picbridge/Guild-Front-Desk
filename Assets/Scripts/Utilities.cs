@@ -11,7 +11,7 @@ namespace GFD.Utilities
     public static class GeminiQuestGenerator
     {
         private static readonly string apiKey = "AIzaSyDTZsTqU0dGB1NKNP31GRHT6HiPyEuzpYo"; // Store this securely, perhaps in a config file
-        private static readonly string geminiApiEndpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent";
+        private static readonly string geminiApiEndpoint = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent";
 
         [Serializable]
         private class GeminiRequest
@@ -22,18 +22,18 @@ namespace GFD.Utilities
             public GeminiRequest(string prompt)
             {
                 contents = new Content[] {
-                    new Content {
-                        parts = new Part[] {
-                            new Part { text = prompt }
-                        }
-                    }
-                };
+            new Content {
+                parts = new Part[] {
+                    new Part { text = prompt }
+                }
+            }
+        };
 
                 generationConfig = new GenerationConfig
                 {
-                    temperature = 0.7f,
-                    maxOutputTokens = 800,
-                    topP = 0.95f
+                    temperature = 0.4f,        
+                    maxOutputTokens = 600,     
+                    topP = 0.9f                
                 };
             }
         }
@@ -77,7 +77,7 @@ namespace GFD.Utilities
             Action<QuestData> onComplete)
         {
             string prompt = BuildQuestPrompt(parameters);
-
+            Debug.Log($"Generated prompt: {prompt}"); // Log the prompt for debugging
             yield return ProcessWithGemini(prompt, response => {
                 // Validate and structure the response
                 QuestData quest = ValidateAndParseResponse(response, parameters);
@@ -105,7 +105,14 @@ namespace GFD.Utilities
             prompt.AppendLine("- Quest name must be 2-6 words");
             prompt.AppendLine("- Description must be 1-3 sentences and under 200 characters");
             prompt.AppendLine("- Quest type must be one of: Elimination, Exploration, Escort, Retrieval, Assassination");
-            prompt.AppendLine("- Reward and duration should be appropriate for difficulty");
+
+            // New specific reward and duration constraints based on difficulty
+            prompt.AppendLine("- Reward and duration must be within these ranges based on difficulty:");
+            prompt.AppendLine("  * Easy: reward 5-20, duration 1-3 days");
+            prompt.AppendLine("  * Normal: reward 15-30, duration 2-4 days");
+            prompt.AppendLine("  * Hard: reward 25-50, duration 3-6 days");
+            prompt.AppendLine("  * Deadly: reward 45-70, duration 4-8 days");
+
             prompt.AppendLine("- Content should be fantasy-themed and appropriate for the quest type");
 
             prompt.AppendLine("\nOUTPUT FORMAT:");
@@ -121,6 +128,7 @@ namespace GFD.Utilities
         }
 
         // Communicates with Gemini API
+        // Modify the ProcessWithGemini method in your GeminiQuestGenerator class
         private static IEnumerator ProcessWithGemini(string prompt, Action<string> callback)
         {
             if (string.IsNullOrEmpty(apiKey))
@@ -130,9 +138,11 @@ namespace GFD.Utilities
                 yield break;
             }
 
+            // Use full URL with API key as a query parameter
             string url = $"{geminiApiEndpoint}?key={apiKey}";
             var request = new GeminiRequest(prompt);
             string jsonBody = JsonUtility.ToJson(request);
+            Debug.Log($"Request JSON: {jsonBody}"); // Log request for debugging
 
             using (UnityWebRequest webRequest = new UnityWebRequest(url, "POST"))
             {
@@ -146,14 +156,20 @@ namespace GFD.Utilities
                 if (webRequest.result != UnityWebRequest.Result.Success)
                 {
                     Debug.LogError($"Gemini API Error: {webRequest.error}");
+                    Debug.LogError($"Response: {webRequest.downloadHandler?.text}");
+
+                    // Return fallback quest instead of null
                     callback?.Invoke(null);
                     yield break;
                 }
 
                 try
                 {
-                    var response = JsonUtility.FromJson<GeminiResponse>(webRequest.downloadHandler.text);
-                    if (response.candidates != null && response.candidates.Length > 0 &&
+                    string responseText = webRequest.downloadHandler.text;
+                    Debug.Log($"Raw API response: {responseText}");
+
+                    var response = JsonUtility.FromJson<GeminiResponse>(responseText);
+                    if (response?.candidates != null && response.candidates.Length > 0 &&
                         response.candidates[0].content != null &&
                         response.candidates[0].content.parts != null &&
                         response.candidates[0].content.parts.Length > 0)
@@ -173,6 +189,7 @@ namespace GFD.Utilities
                 }
             }
         }
+
 
         // Validates and parses the Gemini response
         private static QuestData ValidateAndParseResponse(string geminiResponse, QuestParameters parameters)
@@ -259,10 +276,10 @@ namespace GFD.Utilities
         {
             return difficulty switch
             {
-                QuestDifficulty.Easy => UnityEngine.Random.Range(50, 100),
-                QuestDifficulty.Normal => UnityEngine.Random.Range(100, 200),
-                QuestDifficulty.Hard => UnityEngine.Random.Range(200, 400),
-                QuestDifficulty.Deadly => UnityEngine.Random.Range(400, 800),
+                QuestDifficulty.Easy => UnityEngine.Random.Range(5, 20),
+                QuestDifficulty.Normal => UnityEngine.Random.Range(15, 30),
+                QuestDifficulty.Hard => UnityEngine.Random.Range(25, 50),
+                QuestDifficulty.Deadly => UnityEngine.Random.Range(45, 70),
                 _ => 100
             };
         }

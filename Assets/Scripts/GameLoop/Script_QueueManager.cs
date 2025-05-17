@@ -9,7 +9,7 @@ using UnityEngine;
 public class Script_QueueManager : MonoBehaviour
 {
     public static Script_QueueManager Instance { get; private set; }
-
+    [SerializeField] private GameObject adventurerrPrefab;
     [SerializeField] private float fadeInDuration = 1f;
     [SerializeField] private float fadeOutDuration = 1f;
     
@@ -19,6 +19,7 @@ public class Script_QueueManager : MonoBehaviour
     
     private Script_AdventurerManager adventurerManager;
 
+    public event Func<IEnumerator> PreAdventurerExit;
     public event Action<Adventurer> OnAdventurerEntered;
     public event Action<Adventurer> OnAdventurerExited;
 
@@ -79,12 +80,12 @@ public class Script_QueueManager : MonoBehaviour
 
     private Adventurer GenerateAdventurer(AdventurerData adventurerData)
     {
-        GameObject gameObject = new GameObject("Adventurer");
-        SpriteRenderer renderer = gameObject.AddComponent<SpriteRenderer>();
-        Adventurer adventurer = gameObject.AddComponent<Adventurer>();
-
+        GameObject gameObject = Instantiate(adventurerrPrefab);
+        SpriteRenderer renderer = gameObject.GetComponent<SpriteRenderer>();
+        Adventurer adventurer = gameObject.GetComponent<Adventurer>();
         gameObject.transform.position = new Vector3(-0.21f, 1.1f, 1);
         gameObject.transform.localScale = new Vector3(.4f, .4f, 1);
+
 
         // Generate a new adventurer and add to the adventurer database if no adventurer available
         if (adventurerData == null)
@@ -97,9 +98,19 @@ public class Script_QueueManager : MonoBehaviour
             Script_AdventurerManager.Instance.RemoveFromAvailableAdventurers(adventurerData);
             adventurer.CopyFrom(adventurerData);
         }
-        gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Sprites/" + adventurer.data.portrait);
+
+        string portraitName = adventurer.data.portrait;
+        string resourcePath = GlobalConstants.spriteDirectory + portraitName;
+        Sprite loadedSprite = Resources.Load<Sprite>(resourcePath);
+
+        if (loadedSprite == null)
+        {
+            Debug.LogError($"Sprite not found at path: {resourcePath}. Check the portrait name and Resources folder.");
+        }
+        gameObject.GetComponent<SpriteRenderer>().sprite = loadedSprite;
         gameObject.SetActive(false);
 
+        //Debug.Log("Generated Adventurer: " + adventurer.data.adventurerName);
         return adventurer;
     }
     
@@ -113,6 +124,14 @@ public class Script_QueueManager : MonoBehaviour
             {
                 if (currentAdventurer != null)
                 {
+                    if (PreAdventurerExit != null)
+                    {
+                        foreach (Func<IEnumerator> handler in PreAdventurerExit.GetInvocationList())
+                        {
+                            yield return StartCoroutine(handler());
+                        }
+                    }
+
                     // Fade out current adventurer
                     yield return StartCoroutine(FadeAdventurer(false));
                     // Notify that adventurer has exited
@@ -132,6 +151,14 @@ public class Script_QueueManager : MonoBehaviour
             {
                 if (currentAdventurer != null)
                 {
+                    if (PreAdventurerExit != null)
+                    {
+                        foreach (Func<IEnumerator> handler in PreAdventurerExit.GetInvocationList())
+                        {
+                            yield return StartCoroutine(handler());
+                        }
+                    }
+
                     yield return StartCoroutine(FadeAdventurer(false));
                     OnAdventurerExited?.Invoke(currentAdventurer);
                 }
@@ -166,13 +193,13 @@ public class Script_QueueManager : MonoBehaviour
 
     private void HandleAdventurerEntered(Adventurer adventurer)
     {
-        Debug.Log(adventurer.data.adventurerName + "has entered");
+        //Debug.Log(adventurer.data.adventurerName + "has entered");
         StopQueue();
     }
 
     private void HandleAdventurerExited(Adventurer adventurer)
     {
-        Debug.Log(adventurer.data.adventurerName + "has exited");
+        //Debug.Log(adventurer.data.adventurerName + "has exited");
         currentAdventurer = null;
         Destroy(adventurer.gameObject);
     }

@@ -3,15 +3,29 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System.IO;
+using Newtonsoft.Json;
+using System.Collections;
 
 public class Script_QuestManager : MonoBehaviour
 {
+    [Serializable]
+    private class RawQuest
+    {
+        public string name;
+        public string description;
+        public string difficulty;
+        public string type;
+        public int reward;
+        public int duration;
+    }
+
+    [SerializeField] private TextAsset questJsonFile;
+
     public static Script_QuestManager Instance { get; private set; }
 
-    // Using a dictionary for faster quest lookups by ID
     private Dictionary<string, Quest> questsById = new Dictionary<string, Quest>();
 
-    // Maintaining categorized lists for faster filtering
     private List<Quest> allQuests = new List<Quest>();
     private List<Quest> activeQuests = new List<Quest>();
     private List<Quest> completedQuests = new List<Quest>();
@@ -20,6 +34,7 @@ public class Script_QuestManager : MonoBehaviour
 
     public event Action<Quest> OnQuestCreated;
     public event Action<Quest> OnQuestStatusChanged;
+    public event Action OnQuestPopulated;
 
     private void Awake()
     {
@@ -34,12 +49,70 @@ public class Script_QuestManager : MonoBehaviour
         }
     }
 
-    public Quest CreateNewQuest()
+    public void LoadQuestsAsync()
     {
-        Quest newQuest = new Quest();
-        newQuest.GenerateRandomQuest();
-        AddQuestToLists(newQuest);
-        return newQuest;
+        StartCoroutine(LoadAndProcessQuestsCoroutine());
+    }
+
+    private IEnumerator LoadAndProcessQuestsCoroutine()
+    {
+        if (questJsonFile == null)
+        {
+            Debug.LogError("No quest JSON file assigned.");
+            yield break;
+        }
+
+        string jsonContent = questJsonFile.text;
+        List<RawQuest> rawQuests = null;
+        bool done = false;
+
+        // Run parsing in background thread
+        System.Threading.Tasks.Task.Run(() =>
+        {
+            rawQuests = JsonConvert.DeserializeObject<List<RawQuest>>(jsonContent);
+            done = true;
+        });
+
+        // Wait until JSON is parsed
+        while (!done)
+            yield return null;
+
+        // Process parsed quests in coroutine batches
+        yield return StartCoroutine(ProcessParsedQuests(rawQuests));
+    }
+
+    private IEnumerator ProcessParsedQuests(List<RawQuest> rawQuests)
+    {
+        const int batchSize = 10;
+        int processed = 0;
+
+        foreach (var raw in rawQuests)
+        {
+            var difficulty = ParseDifficulty(raw.difficulty);
+
+            var data = new QuestData
+            {
+                questId = Guid.NewGuid().ToString(),
+                questName = raw.name,
+                description = raw.description,
+                questType = ParseQuestType(raw.type),
+                difficulty = difficulty,
+                status = QuestStatus.Pending,
+                assignedAdventurerId = string.Empty,
+                reward = CalculateReward(difficulty),
+                duration = GetMaxDuration(difficulty)
+            };
+
+            Quest quest = new Quest { data = data };
+            AddQuest(quest);
+
+            processed++;
+            if (processed % batchSize == 0)
+                yield return null;
+        }
+
+        //Debug.Log($"[Hybrid Load] Loaded {processed} quests.");
+        OnQuestPopulated?.Invoke();
     }
 
     public Quest AddQuest(Quest questData)
@@ -54,7 +127,7 @@ public class Script_QuestManager : MonoBehaviour
         return questData;
     }
 
-    private void AddQuestToLists(Quest quest)
+    public void AddQuestToLists(Quest quest)
     {
         allQuests.Add(quest);
         questsById[quest.data.questId] = quest;
@@ -65,13 +138,11 @@ public class Script_QuestManager : MonoBehaviour
 
     private void UpdateQuestCategory(Quest quest)
     {
-        // Remove from all category lists first
         activeQuests.Remove(quest);
         completedQuests.Remove(quest);
         failedQuests.Remove(quest);
         pendingQuests.Remove(quest);
 
-        // Add to the appropriate list based on status
         switch (quest.data.status)
         {
             case QuestStatus.Active:
@@ -141,7 +212,6 @@ public class Script_QuestManager : MonoBehaviour
         questsById.Remove(questId);
     }
 
-    // Fast getters for different quest lists
     public IReadOnlyList<Quest> GetAllQuests() => allQuests;
     public IReadOnlyList<Quest> GetActiveQuests() => activeQuests;
     public IReadOnlyList<Quest> GetCompletedQuests() => completedQuests;
@@ -157,7 +227,6 @@ public class Script_QuestManager : MonoBehaviour
         return quest;
     }
 
-    // Advanced filtering methods
     public List<Quest> GetQuestsByType(QuestType type)
     {
         return allQuests.Where(q => q.data.questType == type).ToList();
@@ -180,5 +249,45 @@ public class Script_QuestManager : MonoBehaviour
     {
         if (Instance == this)
             Instance = null;
+    }
+
+    private static QuestType ParseQuestType(string typeString)
+    {
+        if (Enum.TryParse<QuestType>(typeString, true, out var result))
+            return result;
+
+        return QuestType.Elimination;
+    }
+
+    private static QuestDifficulty ParseDifficulty(string difficultyString)
+    {
+        if (Enum.TryParse<QuestDifficulty>(difficultyString, true, out var result))
+            return result;
+
+        return QuestDifficulty.Normal;
+    }
+
+    private static int CalculateReward(QuestDifficulty difficulty)
+    {
+        return difficulty switch
+        {
+            QuestDifficulty.Easy => UnityEngine.Random.Range(5, 20),
+            QuestDifficulty.Normal => UnityEngine.Random.Range(15, 30),
+            QuestDifficulty.Hard => UnityEngine.Random.Range(25, 50),
+            QuestDifficulty.Deadly => UnityEngine.Random.Range(45, 70),
+            _ => 100
+        };
+    }
+
+    private static int GetMaxDuration(QuestDifficulty difficulty)
+    {
+        return difficulty switch
+        {
+            QuestDifficulty.Easy => UnityEngine.Random.Range(1, 3),
+            QuestDifficulty.Normal => UnityEngine.Random.Range(2, 4),
+            QuestDifficulty.Hard => UnityEngine.Random.Range(3, 6),
+            QuestDifficulty.Deadly => UnityEngine.Random.Range(4, 8),
+            _ => 2
+        };
     }
 }

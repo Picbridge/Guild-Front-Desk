@@ -12,33 +12,19 @@ public class Script_GameManager : MonoBehaviour
     {
         Script_TimeManager.Instance.StartDay();
         Script_TimeManager.Instance.OnDayEnded += HandleDayEnded;
+        Script_QuestManager.Instance.LoadQuestsAsync();
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            //GameObject adventurerObject = Instantiate(adventurerPrefab);
-
-            //adventurerObject.transform.position = new Vector3(0, 0.9f, 1);
-            //adventurerObject.transform.localScale = new Vector3(2f, 2f, 0);
-
-            //var adventurerScript = adventurerObject.GetComponent<Adventurer>();
-            //var builder = adventurerObject.GetComponent<AdventurerRenderer>();
-
-            //adventurerScript.Init();
-            //builder.BuildFrom(adventurerScript.instance);
-
-            //foreach (var sr in adventurerObject.GetComponentsInChildren<SpriteRenderer>())
-            //{
-            //    sr.color = new Color(1, 1, 1, 0);
-            //    StartCoroutine(FadeIn(sr, 0.1f));
-            //}
-            AddNewAdventurerToQueue();
+            Script_QueueManager.Instance.ResumeQueue();
+            
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            Script_QueueManager.Instance.ResumeQueue();
+            AddNewAdventurerToQueue();
         }
 
     }

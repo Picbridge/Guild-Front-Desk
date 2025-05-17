@@ -12,7 +12,7 @@ public class Adventurer : MonoBehaviour
     }
     public void GenerateRandomAdventurer()
     {
-        Sprite[] availablePortraits = Resources.LoadAll<Sprite>("Sprites");
+        Sprite[] availablePortraits = Resources.LoadAll<Sprite>(GlobalConstants.spriteDirectory);
         Sprite randomPortrait;
         if (availablePortraits != null && availablePortraits.Length > 0)
         {
@@ -24,11 +24,10 @@ public class Adventurer : MonoBehaviour
             randomPortrait = null;
         }
 
-        Debug.Log(randomPortrait.name);
         data.adventurerId = Guid.NewGuid().ToString();
         data.adventurerName = GenerateRandomName();
 
-        data.gender = Gender.Female;//GetRandom<Gender>();
+        data.gender = GetRandom<Gender>();
         data.race = GetRandom<Race>();
         data.adventurerClass = GetRandom<Class>();
         data.personality = GetRandom<Personality>();
@@ -82,10 +81,21 @@ public class Adventurer : MonoBehaviour
 
     public string GetPrompt()
     {
-        return $"Adventurer {data.adventurerName} is a {data.gender} {data.race} " +
-            $"{data.adventurerClass} with a {data.personality} personality. " +
-               $"Their rank is {data.rank} and they have a {data.background} background. " +
-               $"They feel {data.mood}.";
+        return $"You are {data.adventurerName}, a {data.gender} {data.race} {data.adventurerClass}" +
+               $"Personality: {data.personality}" +
+               $"Rank: {data.rank}" +
+               $"Background: {data.background}" +
+               $"Feelings: {data.mood}" +
+               $"Abilities:" +
+               $"- Strength: {data.strength}" +
+               $"- Agility: {data.agility}" +
+               $"- Intelligence: {data.intelligence}" +
+               $"- Endurance: {data.endurance}" +
+               $"ONLY respond with spoken dialogue in quotation marks (\"\")" +
+               $"and do not include any other text. Do not use any special characters or emojis." +
+               $"Do not include any narration, actions, or inner thoughts." +
+               $"Speak in a way that reflects your personality, background, and current feelings. " +
+               $"Avoid being generic. Stay in character.";
     }
 
     public void CopyFrom(AdventurerData availableAdventurer)
