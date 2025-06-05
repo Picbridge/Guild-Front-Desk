@@ -11,6 +11,8 @@ public class AdventurerIdHandIn : MonoBehaviour
     private UI_TweenHelper adventurerIdTween;
 
     private UI_TweenHelper handInTween;
+
+    private Script_QueueManager queueManager;
     private void Awake()
     {
         handInTween = GetComponent<UI_TweenHelper>();
@@ -20,8 +22,9 @@ public class AdventurerIdHandIn : MonoBehaviour
 
     void Start()
     {
-        Script_QueueManager.Instance.OnAdventurerEntered += HandleAdventurerEntered;
-        Script_QueueManager.Instance.PreAdventurerExit += HandleAdventurerExited;
+        queueManager = Script_QueueManager.Instance;
+        queueManager.OnAdventurerEntered += HandleAdventurerEntered;
+        queueManager.PreAdventurerExit += HandleAdventurerExited;
     }
 
     // Update is called once per frame
@@ -43,80 +46,65 @@ public class AdventurerIdHandIn : MonoBehaviour
 
     private void HandleAdventurerEntered(Adventurer adventurer)
     {
-        Transform idCardTransform = handInTween.gameObject.transform.Find(GlobalConstants.adventurerIdDirectory + "IdCard");
-        GameObject idCard = idCardTransform != null ? idCardTransform.gameObject : null;
+        // Only adventurers have adventurer IDs
+        if (adventurer.data.adventurerType != AdventurerType.Adventurer)
+            return;
 
-        idCard.transform.Find("Name").GetComponent<TMP_Text>().text = adventurer.data.adventurerName;
-        idCard.transform.Find("Class").GetComponent<TMP_Text>().text = adventurer.data.adventurerClass.ToString();
-        idCard.transform.Find("Gender").GetComponent<TMP_Text>().text = adventurer.data.gender.ToString();
-        idCard.transform.Find("Race").GetComponent<TMP_Text>().text = adventurer.data.race.ToString();
-
-        Color sealingWaxColor = Color.white;
-
-        switch (adventurer.data.rank)
-        {
-            case Rank.Bronze:
-                sealingWaxColor = new Color(0.545f, 0.271f, 0.075f); 
-                break;
-            case Rank.Silver:
-                sealingWaxColor = new Color(0.726f, 0.726f, 0.726f);
-                break;
-            case Rank.Gold:
-                sealingWaxColor = new Color(0.99f, 0.9f, 0.36f);
-                break;
-            case Rank.Platinum:
-                sealingWaxColor = new Color(0.971f, 0.971f, 0.971f);
-                break;
-            case Rank.Diamond:
-                sealingWaxColor = new Color(0.7f, 1, 0.97f);
-                break;
-            case Rank.Adamantium:
-                sealingWaxColor = new Color(0.73f, 0.46f, 1);
-                break;
-        }
-
-        Transform profileTransform = handInTween.gameObject.transform.Find(GlobalConstants.adventurerIdDirectory + "Profile");
-        GameObject profile = profileTransform != null ? profileTransform.gameObject : null;
-        profile.GetComponent<Image>().sprite = Resources.Load<Sprite>(GlobalConstants.spriteDirectory + adventurer.data.portrait);
-
-        idCard.transform.Find("SealingWax").GetComponent<Image>().color = sealingWaxColor;
-
-        idCardTransform = adventurerIdTween.gameObject.transform.Find(GlobalConstants.adventurerIdDirectory + "IdCard");
-        idCard = idCardTransform != null ? idCardTransform.gameObject : null;
-        idCard.transform.Find("Name").GetComponent<TMP_Text>().text = adventurer.data.adventurerName;
-        idCard.transform.Find("Class").GetComponent<TMP_Text>().text = adventurer.data.adventurerClass.ToString();
-        idCard.transform.Find("Gender").GetComponent<TMP_Text>().text = adventurer.data.gender.ToString();
-        idCard.transform.Find("Race").GetComponent<TMP_Text>().text = adventurer.data.race.ToString();
-
-        switch (adventurer.data.rank)
-        {
-            case Rank.Bronze:
-                sealingWaxColor = new Color(0.545f, 0.271f, 0.075f);
-                break;
-            case Rank.Silver:
-                sealingWaxColor = new Color(0.726f, 0.726f, 0.726f);
-                break;
-            case Rank.Gold:
-                sealingWaxColor = new Color(0.99f, 0.9f, 0.36f);
-                break;
-            case Rank.Platinum:
-                sealingWaxColor = new Color(0.971f, 0.971f, 0.971f);
-                break;
-            case Rank.Diamond:
-                sealingWaxColor = new Color(0.7f, 1, 0.97f);
-                break;
-            case Rank.Adamantium:
-                sealingWaxColor = new Color(0.73f, 0.46f, 1);
-                break;
-        }
-
-        idCard.transform.Find("SealingWax").GetComponent<Image>().color = sealingWaxColor;
-
-        profileTransform = adventurerIdTween.gameObject.transform.Find(GlobalConstants.adventurerIdDirectory + "Profile");
-        profile = profileTransform != null ? profileTransform.gameObject : null;
-        profile.GetComponent<Image>().sprite = Resources.Load<Sprite>(GlobalConstants.spriteDirectory + adventurer.data.portrait);
+        UpdateIdCardPanel(handInTween.gameObject, adventurer);
+        UpdateIdCardPanel(adventurerIdTween.gameObject, adventurer);
 
         handInTween.ToggleOpenClose();
+    }
+
+    private void UpdateIdCardPanel(GameObject parent, Adventurer adventurer)
+    {
+        Transform idCardTransform = parent.transform.Find(GlobalConstants.adventurerIdDirectory + "IdCard");
+        if (idCardTransform == null) return;
+
+        GameObject idCard = idCardTransform.gameObject;
+
+        SetTMPText(idCard, "Name", adventurer.data.adventurerName);
+        SetTMPText(idCard, "Class", adventurer.data.adventurerClass.ToString());
+        SetTMPText(idCard, "Gender", adventurer.data.gender.ToString());
+        SetTMPText(idCard, "Race", adventurer.data.race.ToString());
+
+        Image sealingWaxImage = idCard.transform.Find("SealingWax")?.GetComponent<Image>();
+        if (sealingWaxImage != null)
+        {
+            sealingWaxImage.color = GetSealingWaxColor(adventurer.data.rank);
+        }
+
+        Transform profileTransform = parent.transform.Find(GlobalConstants.adventurerIdDirectory + "Profile");
+        if (profileTransform != null)
+        {
+            Image profileImage = profileTransform.GetComponent<Image>();
+            if (profileImage != null)
+            {
+                profileImage.sprite = Resources.Load<Sprite>(GlobalConstants.spriteDirectory + adventurer.data.portrait);
+            }
+        }
+    }
+
+    private void SetTMPText(GameObject parent, string childName, string value)
+    {
+        TMP_Text textComponent = parent.transform.Find(childName)?.GetComponent<TMP_Text>();
+        if (textComponent != null)
+        {
+            textComponent.text = value;
+        }
+    }
+
+    private Color GetSealingWaxColor(Rank rank)
+    {
+        return rank switch
+        {
+            Rank.Bronze => new Color(0.545f, 0.271f, 0.075f),
+            Rank.Silver => new Color(0.726f, 0.726f, 0.726f),
+            Rank.Gold => new Color(0.99f, 0.9f, 0.36f),
+            Rank.Diamond => new Color(0.7f, 1f, 0.97f),
+            Rank.Adamantine => new Color(0.73f, 0.46f, 1f),
+            _ => Color.white
+        };
     }
 
     public IEnumerator HandleAdventurerExited()

@@ -9,15 +9,25 @@ using UnityEngine;
 public class Script_QueueManager : MonoBehaviour
 {
     public static Script_QueueManager Instance { get; private set; }
-    [SerializeField] private GameObject adventurerrPrefab;
-    [SerializeField] private float fadeInDuration = 1f;
-    [SerializeField] private float fadeOutDuration = 1f;
+
+    [Header("Queue Manager Settings")]
+    [SerializeField] 
+    private GameObject adventurerPrefab;
+    [SerializeField] 
+    private AdventurerSO Guard;
+
+    [Header("Fade Settings")]
+    [SerializeField] 
+    private float fadeInDuration = 1f;
+    [SerializeField] 
+    private float fadeOutDuration = 1f;
     
     private Queue<Adventurer> adventurerQueue = new Queue<Adventurer>();
     private Adventurer currentAdventurer;
     private bool isProcessingQueue = false;
     
     private Script_AdventurerManager adventurerManager;
+    private Script_QuestManager questManager;
 
     public event Func<IEnumerator> PreAdventurerExit;
     public event Action<Adventurer> OnAdventurerEntered;
@@ -37,17 +47,37 @@ public class Script_QueueManager : MonoBehaviour
     private void Start()
     {
         adventurerManager = Script_AdventurerManager.Instance;
+        questManager = Script_QuestManager.Instance;
+
+        questManager.OnDailyQuestUpdated += ResumeQueue;
+        Script_TimeManager.Instance.OnDayStarted += AddNPCtoQueue;
         OnAdventurerEntered += HandleAdventurerEntered;
         OnAdventurerExited += HandleAdventurerExited;
         //StartCoroutine(ProcessQueue());
     }
+    private void AddNPCtoQueue()
+    {
+
+        var lists = questManager.GetDailyDeadInActions();
+
+        if (lists.Count > 0)
+        {
+            // return guard to inform player that there several adventurers died in quests
+            // 
+            var generatedGuard = GenerateAdventurer(Guard.data);
+            AddAdventurerToQueue(generatedGuard);
+        }
+    }
     public Adventurer GetNextAvailableAdventurer()
     {
-        // Find first available adventurer
-        AdventurerData availableAdventurerData = Script_AdventurerManager.Instance.GetAvailableAdventurers().FirstOrDefault(a => !(a.currentState == GFD.Adventurer.State.InQuest) &&
-        (a.injuryStatus == GFD.Adventurer.InjuryStatus.Healthy));
+        // Check if there's any adventurers that completed their quest
+        var nextAdventurerData = adventurerManager.GetCompletedAdventurer() ?? 
+            adventurerManager.GetAvailableAdventurers().FirstOrDefault(
+                a => a.currentState != GFD.Adventurer.State.InQuest);
 
-       return GenerateAdventurer(availableAdventurerData);
+        var nextAdventurer = GenerateAdventurer(nextAdventurerData);
+        AddAdventurerToQueue(nextAdventurer);
+        return nextAdventurer;
     }
     public void StopQueue()
     {
@@ -58,6 +88,11 @@ public class Script_QueueManager : MonoBehaviour
     {
         if (!isProcessingQueue)
         {
+            if (questManager.GetQuestsOfTheDay().Count > 0 &&
+                adventurerQueue.Count <= 0)
+            {
+                GetNextAvailableAdventurer();
+            }
             StartCoroutine(ProcessQueue());
         }
     }
@@ -74,28 +109,35 @@ public class Script_QueueManager : MonoBehaviour
     public void AddAdventurerToQueue(Adventurer adventurer)
     {
         adventurerQueue.Enqueue(adventurer);
-        Script_AdventurerManager.Instance.RemoveFromAvailableAdventurers(adventurer.data);
-        Debug.Log(adventurer.GetPrompt());
+        adventurerManager.RemoveFromAvailableAdventurers(adventurer.data);
+        //Debug.Log(adventurer.data.prompt);
+    }
+    public void AssignQuestToCurrentAdventurer(Quest quest)
+    {
+        if (currentAdventurer != null)
+        {
+            questManager.AssignQuestToAdventurer(quest.data.questId, currentAdventurer.data.adventurerId);
+            adventurerManager.MarkAdventurerAsBusy(currentAdventurer.data.adventurerId);
+        }
     }
 
     private Adventurer GenerateAdventurer(AdventurerData adventurerData)
     {
-        GameObject gameObject = Instantiate(adventurerrPrefab);
+        GameObject gameObject = Instantiate(adventurerPrefab);
         SpriteRenderer renderer = gameObject.GetComponent<SpriteRenderer>();
         Adventurer adventurer = gameObject.GetComponent<Adventurer>();
         gameObject.transform.position = new Vector3(-0.21f, 1.1f, 1);
         gameObject.transform.localScale = new Vector3(.4f, .4f, 1);
 
-
         // Generate a new adventurer and add to the adventurer database if no adventurer available
         if (adventurerData == null)
         {
             adventurer.GenerateRandomAdventurer();
-            Script_AdventurerManager.Instance.AddAdventurer(adventurer.data);
+            adventurerManager.AddAdventurer(adventurer.data);
         }
         else
         {
-            Script_AdventurerManager.Instance.RemoveFromAvailableAdventurers(adventurerData);
+            adventurerManager.RemoveFromAvailableAdventurers(adventurerData);
             adventurer.CopyFrom(adventurerData);
         }
 

@@ -3,47 +3,132 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using Unity.VisualScripting.Antlr3.Runtime;
+using System.Collections.Generic;
+using System.Linq;
 
 public class QuestUI : MonoBehaviour
 {
     private Script_QuestManager questManager;
-
-    [SerializeField]
-    private RectTransform questList;
+    private Script_TimeManager timeManager;
+    private Script_GameManager gameManager;
+    private Script_QueueManager queueManager;
+    private Script_AdventurerManager adventurerManager;
+    
+    [Header("UI Elements")]
     [SerializeField]
     private GameObject questButtonPrefab;
     [SerializeField]
     private GameObject questPanel;
+    [SerializeField] 
+    private GameObject descPanel;
+    [SerializeField]
+    private GameObject listPanel;
+    [SerializeField]
+    private Button assignButton;
+
+    [Header("Button References")]
+    [SerializeField]
+    private Button questToggleButton;
+    [SerializeField]
+    private Button questDescriptionButton;
+    [SerializeField]
+    private Button activeQuestsButton;
+    [SerializeField]
+    private Button completedQuestsButton;
+    [SerializeField]
+    private Button failedQuestsButton;
+
+    [Header("Animation Sprites")]
     [SerializeField]
     private Sprite[] questPanelAnimation;
     [SerializeField]
-    private UI_TweenHelper tweenHelper;
+    private Sprite[] signatureAnimation;
+    
     [SerializeField]
-    private GameObject questDescriptionPanel;
+    private GameObject listedQuestDescPanel;
+
+    private GameObject questListContent;
+    private UI_TweenHelper tweenHelper;
+    private int totalQuestCount = 0;
+    private int assignedQuestCount = 0;
+    private Quest currentQuest;
+    private bool isQuestPanelVisible = false;
+    private Coroutine animationCoroutine;
+    private Button currentButton;
+    private Button currOpenedQuest = null;
 
     [ContextMenu("Toggle Open Close")]
     public void ToggleOpenClose()
     {
         if (isQuestPanelVisible)
         {
-            HideQuestPanel();
+            StartCoroutine(HideQuestPanel());
         }
         else
         {
             ShowQuestPanel();
         }
     }
-    private bool isQuestPanelVisible = false;
-    private Coroutine animationCoroutine;
-    Button currOpenedQuest = null;
-
     void Start()
     {
         questManager = Script_QuestManager.Instance;
-        questManager.OnQuestPopulated += PopulateQuestList;
-        questList.gameObject.SetActive(false);
+        timeManager = Script_TimeManager.Instance;
+        gameManager = Script_GameManager.Instance;
+        queueManager = Script_QueueManager.Instance;
+        adventurerManager = Script_AdventurerManager.Instance;
+
+        questListContent =listPanel.transform.Find("Viewport/Content").gameObject;
+        tweenHelper = gameObject.GetComponent<UI_TweenHelper>();
+        currentButton = questDescriptionButton;
+
+        questManager.OnDailyQuestUpdated += PopulateQuestList;
         tweenHelper.PreClose += HideQuestPanel;
         tweenHelper.PostOpen += ShowQuestPanel;
+
+        TogglePanelVisibility(listPanel, false);
+        TogglePanelVisibility(descPanel, false);
+        TogglePanelVisibility(listedQuestDescPanel, false);
+
+        assignButton.onClick.AddListener(OnAssignButtonClick);
+
+        questToggleButton.onClick.AddListener(() =>
+        {
+            if (queueManager.GetCurrentAdventurer().data.currentState != GFD.Adventurer.State.InQuest)
+                tweenHelper.ToggleOpenClose();
+        });
+
+        questDescriptionButton.onClick.AddListener(() =>
+        {
+            Debug.Log("Quest Description button clicked.");
+            if (currentButton == questDescriptionButton)
+                return;
+            StartCoroutine(HideSwapShowSequence(currentButton.transform, questDescriptionButton.transform));
+            currentButton = questDescriptionButton;
+        });
+        activeQuestsButton.onClick.AddListener(() =>
+        {
+            Debug.Log("Active Quests button clicked.");
+            if (currentButton == activeQuestsButton)
+                return;
+            StartCoroutine(HideSwapShowSequence(currentButton.transform, activeQuestsButton.transform));
+            currentButton = activeQuestsButton;
+        });
+        completedQuestsButton.onClick.AddListener(() =>
+        {
+            Debug.Log("Completed Quests button clicked.");
+            if (currentButton == completedQuestsButton)
+                return;
+            StartCoroutine(HideSwapShowSequence(currentButton.transform, completedQuestsButton.transform));
+            currentButton = completedQuestsButton;
+        });
+        failedQuestsButton.onClick.AddListener(() =>
+        {
+            Debug.Log("Failed Quests button clicked.");
+            if (currentButton == failedQuestsButton)
+                return;
+            StartCoroutine(HideSwapShowSequence(currentButton.transform, failedQuestsButton.transform));
+            currentButton = failedQuestsButton;
+        });
     }
 
     private void Update()
@@ -57,67 +142,155 @@ public class QuestUI : MonoBehaviour
             tweenHelper.ToggleOpenClose();
         }
     }
-    void PopulateQuestList()
+
+    private void FillQuestList(Button currButton)
     {
-        //Debug.Log("Populating Quest List");
-
-        foreach (Transform child in questList)
+        if (currButton == questDescriptionButton)
         {
-            Destroy(child.gameObject); // Clear existing
+            // Fill quest description
+            UpdateQuestData();
         }
-
-        foreach (var quest in questManager.GetAllQuests())
+        else
         {
-            GameObject buttonGO = Instantiate(questButtonPrefab, questList);
-            buttonGO.name = $"Button_{quest.data.questId}";
 
-            TMP_Text text = buttonGO.GetComponentInChildren<TMP_Text>();
-            if (text != null)
-                text.text = quest.data.questName;
+            // clear previous entries
+            foreach (Transform child in questListContent.transform)
+                Destroy(child.gameObject);
 
-            Button button = buttonGO.GetComponent<Button>();
-            if (button != null)
+            IEnumerable<Quest> source = currButton == activeQuestsButton
+                ? questManager.GetActiveQuests()
+                : currButton == completedQuestsButton
+                    ? questManager.GetCompletedQuests()
+                    : questManager.GetFailedQuests();
+            
+            Debug.Log($"Filling quest list with {source.Count()} quests.");
+
+            foreach (var quest in source)
             {
-                button.onClick.AddListener(() =>
+                Debug.Log($"Quest {quest.data.questName} added to list.");
+                GameObject buttonGO = Instantiate(questButtonPrefab, questListContent.transform);
+                buttonGO.name = $"Button_{quest.data.questId}";
+
+                TMP_Text text = buttonGO.GetComponentInChildren<TMP_Text>();
+                if (text != null)
+                    text.text = quest.data.questName;
+
+                Button button = buttonGO.GetComponent<Button>();
+                if (button != null)
                 {
-                    //Debug.Log($"Clicked Quest: {quest.data.questName}");
-
-                    bool isSameQuest = currOpenedQuest == button;
-
-                    if (isSameQuest)
+                    button.onClick.AddListener(() =>
                     {
-                        currOpenedQuest = null;
-                        questDescriptionPanel.GetComponent<UI_TweenHelper>().ToggleOpenClose();
-                    }
-                    else
-                    {
-                        StartCoroutine(OpenQuestPanelAfterClose(button, quest));
-                    }
-                });
+                        Debug.Log($"Clicked Quest: {quest.data.questName}");
+
+                        bool isSameQuest = currOpenedQuest == button;
+
+                        if (isSameQuest)
+                        {
+                            currOpenedQuest = null;
+                            listedQuestDescPanel.GetComponent<UI_TweenHelper>().ToggleOpenClose();
+                        }
+                        else
+                        {
+                            StartCoroutine(OpenQuestPanelAfterClose(button, quest));
+                        }
+                    });
+                }
             }
-
-
         }
     }
+
     private IEnumerator OpenQuestPanelAfterClose(Button button, Quest quest)
     {
         if (currOpenedQuest != null)
         {
-            questDescriptionPanel.GetComponent<UI_TweenHelper>().ToggleOpenClose();
+            listedQuestDescPanel.GetComponent<UI_TweenHelper>().ToggleOpenClose();
 
-            float duration = questDescriptionPanel.GetComponent<UI_TweenHelper>().AnimationDuration; 
+            float duration = listedQuestDescPanel.GetComponent<UI_TweenHelper>().AnimationDuration;
             yield return new WaitForSeconds(duration + 0.05f);
         }
 
         currOpenedQuest = button;
 
-        var panelTransform = questDescriptionPanel.transform;
+        var assignedAdventurer = adventurerManager.GetAdventurerById(quest.data.assignedAdventurerId);
+
+        var panelTransform = listedQuestDescPanel.transform;
         panelTransform.Find("Name").GetComponent<TMP_Text>().text = quest.data.questName;
         panelTransform.Find("Description").GetComponent<TMP_Text>().text = quest.data.description;
         panelTransform.Find("Type").GetComponent<TMP_Text>().text = quest.data.questType.ToString();
         panelTransform.Find("Difficulty").GetComponent<TMP_Text>().text = quest.data.difficulty.ToString();
 
-        questDescriptionPanel.GetComponent<UI_TweenHelper>().ToggleOpenClose();
+        if (!string.IsNullOrEmpty(quest.data.assignedAdventurerId))
+            panelTransform.Find("Assigned").GetComponent<TMP_Text>().text = assignedAdventurer.adventurerName;
+        listedQuestDescPanel.GetComponent<UI_TweenHelper>().ToggleOpenClose();
+    }
+
+    private void TogglePanelVisibility(GameObject panel, bool isVisible)
+    {
+        if (panel.GetComponent<CanvasGroup>() == null)
+        {
+            panel.AddComponent<CanvasGroup>();
+        }
+        panel.GetComponent<CanvasGroup>().alpha = isVisible ? 1 : 0;
+        panel.GetComponent<CanvasGroup>().interactable = isVisible;
+        panel.GetComponent<CanvasGroup>().blocksRaycasts = isVisible;
+    }
+
+    private IEnumerator HideSwapShowSequence(Transform prevButton, Transform currButton)
+    {
+        TogglePanelVisibility(listPanel, false);
+
+        yield return StartCoroutine(HideQuestPanel());
+
+        yield return StartCoroutine(gameObject.GetComponent<UI_FolderFlipAnimation>().SwapCoroutine(prevButton, currButton));
+
+        FillQuestList(currButton.GetComponent<Button>());
+        
+        ShowQuestPanel();
+
+        TogglePanelVisibility(listPanel, true);
+    }
+
+    private void OnAssignButtonClick()
+    {
+        if (assignedQuestCount >= totalQuestCount)
+        {
+            Debug.Log("All quests assigned for the day.");
+            return;
+        }
+        assignedQuestCount++;
+        timeManager.SpendTime();
+        tweenHelper.ToggleOpenClose();
+        queueManager.AssignQuestToCurrentAdventurer(currentQuest);
+
+        UpdateQuestData();
+        queueManager.ResumeQueue();
+    }
+
+    private void PopulateQuestList()
+    {
+        totalQuestCount = questManager.CurrentDailyQuestCount;
+        assignedQuestCount = 0;
+        UpdateQuestData();
+    }
+
+    private void UpdateQuestData()
+    {
+        currentQuest = questManager.GetNextQuestOfTheDay();
+        var panelTransform = descPanel.transform;
+        if (currentQuest == null)
+        {
+            panelTransform.Find("Name").GetComponent<TMP_Text>().text = "";
+            panelTransform.Find("Description").GetComponent<TMP_Text>().text = "";
+            panelTransform.Find("Type").GetComponent<TMP_Text>().text = "";
+            panelTransform.Find("Difficulty").GetComponent<TMP_Text>().text = "";
+            Debug.Log("No quests available for the day.");
+            return;
+        }
+        
+        panelTransform.Find("Name").GetComponent<TMP_Text>().text = currentQuest.data.questName;
+        panelTransform.Find("Description").GetComponent<TMP_Text>().text = currentQuest.data.description;
+        panelTransform.Find("Type").GetComponent<TMP_Text>().text = currentQuest.data.questType.ToString();
+        panelTransform.Find("Difficulty").GetComponent<TMP_Text>().text = currentQuest.data.difficulty.ToString();
     }
 
     public void ShowQuestPanel()
@@ -139,7 +312,7 @@ public class QuestUI : MonoBehaviour
 
         if (currOpenedQuest != null)
         {
-            questDescriptionPanel.GetComponent<UI_TweenHelper>().ToggleOpenClose();
+            listedQuestDescPanel.GetComponent<UI_TweenHelper>().ToggleOpenClose();
             currOpenedQuest = null;
         }
 
@@ -157,7 +330,8 @@ public class QuestUI : MonoBehaviour
         
         if (!open)
         {
-            questList.gameObject.SetActive(false);
+            TogglePanelVisibility(descPanel, false);
+            TogglePanelVisibility(listPanel, false);
         }
 
         if (open)
@@ -181,8 +355,14 @@ public class QuestUI : MonoBehaviour
 
         if (open)
         {
-            questList.gameObject.SetActive(true);
+            UpdateActiveSubPanel();
         }
+    }
+    private void UpdateActiveSubPanel()
+    {
+        bool showDesc = currentButton == questDescriptionButton;
+        TogglePanelVisibility(listPanel, !showDesc);
+        TogglePanelVisibility(descPanel, showDesc);
     }
 
 }

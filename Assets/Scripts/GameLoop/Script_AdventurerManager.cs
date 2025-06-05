@@ -12,10 +12,13 @@ public class Script_AdventurerManager : MonoBehaviour
     
     private Dictionary<string, AdventurerData> adventurerDatabase = new Dictionary<string, AdventurerData>();
     private List<AdventurerData> availableAdventurers = new List<AdventurerData>();
-    
+    private List<AdventurerData> busyAdventurers = new List<AdventurerData>();
+    private List<AdventurerData> deadAdventurers = new List<AdventurerData>();
+
     public event Action<AdventurerData> OnAdventurerCreated;
     public event Action<AdventurerData> OnAdventurerStatusChanged;
-    
+
+    private Script_QuestManager questManager;
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -29,9 +32,11 @@ public class Script_AdventurerManager : MonoBehaviour
     
     private void Start()
     {
-  
+        Script_TimeManager.Instance.OnDayStarted += UpdateAvailableAdventurers;
+        questManager = Script_QuestManager.Instance;
+
     }
-    
+
     public AdventurerData GetAdventurer(string adventurerId)
     {
         if (adventurerDatabase.TryGetValue(adventurerId, out AdventurerData adventurer))
@@ -45,6 +50,8 @@ public class Script_AdventurerManager : MonoBehaviour
     {
         if (!adventurerDatabase.ContainsKey(adventurerData.adventurerId))
         {
+            adventurerDatabase.Add(adventurerData.adventurerId, adventurerData);
+            MarkAdventurerAsAvailable(adventurerData.adventurerId);
             OnAdventurerCreated?.Invoke(adventurerData);
         }
     }
@@ -55,6 +62,7 @@ public class Script_AdventurerManager : MonoBehaviour
         {
             adventurer.currentState = GFD.Adventurer.State.InQuest;
             availableAdventurers.Remove(adventurer);
+            busyAdventurers.Add(adventurer);
             OnAdventurerStatusChanged?.Invoke(adventurer);
         }
     }
@@ -76,8 +84,9 @@ public class Script_AdventurerManager : MonoBehaviour
     {
         if (adventurerDatabase.TryGetValue(adventurerId, out AdventurerData adventurer))
         {
-            adventurer.injuryStatus = InjuryStatus.Dead;
+            adventurer.currentState = State.Dead;
             availableAdventurers.Remove(adventurer);
+            deadAdventurers.Add(adventurer);
             OnAdventurerStatusChanged?.Invoke(adventurer);
         }
     }
@@ -99,8 +108,27 @@ public class Script_AdventurerManager : MonoBehaviour
         }
     }
 
+    public AdventurerData GetCompletedAdventurer()
+    {
+        // Find the first adventurer in the busyAdventurers list with duration <= 0
+        AdventurerData completedAdventurer = busyAdventurers.FirstOrDefault(adventurer => adventurer.questDuration <= 0);
+        if (completedAdventurer != null)
+        {
+            busyAdventurers.Remove(completedAdventurer);
+            return completedAdventurer;
+        }
+        return null;
+    }
+
+    // Update the status of adventurers at the start of each day
     public void UpdateAvailableAdventurers()
     {
+        foreach (var adventurer in busyAdventurers.ToList())
+        {
+            adventurer.questDuration -= 1f;
+        }
         availableAdventurers = adventurerDatabase.Values.Where(adventurer => adventurer.currentState == GFD.Adventurer.State.Resting).ToList();
+        busyAdventurers = adventurerDatabase.Values.Where(adventurer => adventurer.currentState == GFD.Adventurer.State.InQuest).ToList();
+        deadAdventurers = adventurerDatabase.Values.Where(adventurer => adventurer.currentState == GFD.Adventurer.State.Dead).ToList();
     }
 }

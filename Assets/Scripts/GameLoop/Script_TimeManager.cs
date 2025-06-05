@@ -1,36 +1,23 @@
 using UnityEngine;
-using TMPro;
-using UnityEngine.Localization;
-using UnityEngine.Localization.SmartFormat.PersistentVariables;
-using System.Collections.Generic;
 using System;
 
 public class Script_TimeManager : MonoBehaviour
 {
     public static Script_TimeManager Instance { get; private set; }
-
-    [SerializeField] 
-    private RectTransform dial;
-    [SerializeField] 
-    private TMP_Text timeOfDayText;
-    [SerializeField] 
-    private TMP_Text dayCountText;
-
-    [SerializeField] 
-    private float totalDayDuration = 60f;
+    private Script_QuestManager questManager;
 
     public event Action OnDayEnded;
     private float currentTime = 0f;
-    private bool isDayRunning = false;
     private int dayCount = 0;
     private TimePhase currentPhase = TimePhase.Morning;
-    private TimePhase lastDisplayedPhase = TimePhase.Morning;
 
-    // Localization
-    private LocalizedString localizedDayFormat;
-    private IntVariable dayVariable;
-    private Dictionary<TimePhase, LocalizedString> timePhaseStrings = new Dictionary<TimePhase, LocalizedString>();
-    private LocalizedString currentTimePhaseString;
+    private float totalDayDuration = 60f;
+    private float totalWorkHours;
+
+    public event Action OnDayStarted;
+    public event Action<float> OnSpendTime;
+
+    private bool isDayRunning = false;
 
     private void Awake()
     {
@@ -42,122 +29,46 @@ public class Script_TimeManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        SetupDayLocalization();
-        SetupTimePhaseLocalization();
-    }
 
-    private void SetupDayLocalization()
-    {
-        dayVariable = new IntVariable();
-        localizedDayFormat = new LocalizedString("UI Texts", "ui.main.dayCounter");
-
-        localizedDayFormat.Arguments = new object[] { new { day = dayVariable } };
-        localizedDayFormat.StringChanged += UpdateDayCountText;
-    }
-
-
-    private void SetupTimePhaseLocalization()
-    {
-        // Preload time phase strings but DO NOT subscribe yet
-        foreach (TimePhase phase in Enum.GetValues(typeof(TimePhase)))
-        {
-            LocalizedString localizedString = new LocalizedString("UI Texts", GetTimePhaseKey(phase));
-            timePhaseStrings[phase] = localizedString;
-        }
-    }
-
-
-    private string GetTimePhaseKey(TimePhase phase)
-    {
-        return phase switch
-        {
-            TimePhase.Morning => "ui.main.time.morning",
-            TimePhase.Afternoon => "ui.main.time.afternoon",
-            TimePhase.Evening => "ui.main.time.evening",
-            _ => "ui.main.time.unknown"
-        };
-    }
-
-    private void UpdateDayCountText(string localizedValue)
-    {
-        dayCountText.text = localizedValue;
-    }
-
-    private void UpdateTimePhaseText(string localizedValue)
-    {
-        timeOfDayText.text = localizedValue;
+        totalWorkHours = 0.5f * totalDayDuration; // 50% of the day is work time
     }
 
     void Start()
     {
         currentTime = 0f;
-        isDayRunning = true;
-        UpdateTimeDisplay();
-        UpdateDayDisplay();
+        questManager = Script_QuestManager.Instance;
+        questManager.OnDailyQuestUpdated += SetWorkHours;
     }
 
     public void Update()
     {
-        if (!isDayRunning)
-            return;
-
-        currentTime += Time.deltaTime;
-
-        float progress = Mathf.Clamp01(currentTime / totalDayDuration);
-        dial.localRotation = Quaternion.Euler(0, 0, Mathf.Lerp(0, -360, progress));
-
-        // Update time phase if it changed
-        currentPhase = GetCurrentTimePhase();
-        if (currentPhase != lastDisplayedPhase)
-        {
-            lastDisplayedPhase = currentPhase;
-            UpdateTimeDisplay();
-        }
-
-        if (currentTime >= (totalDayDuration * 0.5f))
+        //currentTime += Time.deltaTime;
+        if (currentTime >= totalWorkHours)
         {
             EndDay();
         }
     }
-
-    private void UpdateTimeDisplay()
+    public void SetWorkHours()
     {
-        // Unsubscribe from previous stringChanged event
-        if (currentTimePhaseString != null)
-        {
-            currentTimePhaseString.StringChanged -= UpdateTimePhaseText;
-        }
-
-        if (timePhaseStrings.TryGetValue(currentPhase, out LocalizedString localizedString))
-        {
-            currentTimePhaseString = localizedString;
-            currentTimePhaseString.StringChanged += UpdateTimePhaseText;
-            currentTimePhaseString.RefreshString();
-        }
+        var workHours = questManager.CurrentDailyQuestCount;
+        totalWorkHours = workHours;
+        totalDayDuration = workHours * 2f;
     }
-
-
-    private void UpdateDayDisplay()
-    {
-        dayVariable.Value = dayCount;
-        localizedDayFormat.RefreshString();
-    }
-
     public void StartDay()
     {
+        if (isDayRunning)
+            return;
+
         dayCount++;
         currentTime = 0f;
         isDayRunning = true;
-        dial.localRotation = Quaternion.Euler(0, 0, 0);
-        Script_AdventurerManager.Instance.UpdateAvailableAdventurers();
-
-        // Update UI with new day
-        UpdateDayDisplay();
-        UpdateTimeDisplay();
+        OnDayStarted?.Invoke();
     }
 
     public void EndDay()
     {
+        if (!isDayRunning)
+            return;
         isDayRunning = false;
         OnDayEnded?.Invoke();
     }
@@ -171,18 +82,23 @@ public class Script_TimeManager : MonoBehaviour
         else
             return TimePhase.Evening;
     }
-
-    public void SpendTime(float seconds)
+    public float GetCurrentTime()
     {
-        currentTime += seconds;
+        return currentTime;
+    }
+    public int GetCurrentDayCount()
+    {
+        return dayCount;
+    }
 
-        // Update time phase if it changed after spending time
-        TimePhase newPhase = GetCurrentTimePhase();
-        if (newPhase != lastDisplayedPhase)
-        {
-            currentPhase = newPhase;
-            lastDisplayedPhase = newPhase;
-            UpdateTimeDisplay();
-        }
+    public void SpendTime()
+    {
+        if (currentTime >= totalWorkHours)
+            return;
+        currentTime ++;
+        // Update time phase
+        currentPhase = GetCurrentTimePhase();
+        float progress = Mathf.Clamp01(currentTime / totalWorkHours) * 180f;
+        OnSpendTime?.Invoke(progress);
     }
 }

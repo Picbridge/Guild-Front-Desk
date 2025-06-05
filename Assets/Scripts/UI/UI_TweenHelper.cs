@@ -87,8 +87,6 @@ public class UI_TweenHelper : MonoBehaviour
                     yield return StartCoroutine(handler());
                 }
             }
-            if (targetCanvasGroup != null)
-                targetObject.SetActive(true);
         }
         if (!open)
         {
@@ -128,9 +126,6 @@ public class UI_TweenHelper : MonoBehaviour
 
         if (!open)
         {
-            if (targetCanvasGroup != null)
-                targetObject.SetActive(false);
-
             targetRectTransform.anchoredPosition = initialPosition;
             PostClose?.Invoke();
         }

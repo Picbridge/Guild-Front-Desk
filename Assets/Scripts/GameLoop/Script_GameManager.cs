@@ -5,28 +5,54 @@ using GFD.Quest;
 
 public class Script_GameManager : MonoBehaviour
 {
-    [SerializeField] 
-    private GameObject adventurerPrefab;
+    public static Script_GameManager Instance { get; private set; }
+
+    private Script_TimeManager timeManager;
+    private Script_QuestManager questManager;
+    private Script_QueueManager queueManager;
+    private Script_AdventurerManager adventurerManager;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
 
     void Start()
     {
-        Script_TimeManager.Instance.StartDay();
-        Script_TimeManager.Instance.OnDayEnded += HandleDayEnded;
-        Script_QuestManager.Instance.LoadQuestsAsync();
+        timeManager = Script_TimeManager.Instance;
+        questManager = Script_QuestManager.Instance;
+        queueManager = Script_QueueManager.Instance;
+        adventurerManager = Script_AdventurerManager.Instance;
+
+        timeManager.OnDayEnded += HandleDayEnded;
+        questManager.OnQuestPopulated += HandleQuestPopulated;
+        questManager.LoadQuestsAsync();
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Script_QueueManager.Instance.ResumeQueue();
+            queueManager.ResumeQueue();
             
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            AddNewAdventurerToQueue();
+            timeManager.StartDay();
         }
 
+    }
+
+    // This point is the entry point for the game loop
+    private void HandleQuestPopulated()
+    {
+        timeManager.StartDay();
     }
 
     private void HandleDayEnded()
@@ -36,18 +62,7 @@ public class Script_GameManager : MonoBehaviour
 
     public void AddNewAdventurerToQueue()
     {
-        Adventurer newAdventurer = Script_QueueManager.Instance.GetNextAvailableAdventurer();
-        Script_QueueManager.Instance.AddAdventurerToQueue(newAdventurer);
+        Adventurer newAdventurer = queueManager.GetNextAvailableAdventurer();
     }
-    
-    public void AssignQuestToCurrentAdventurer(QuestData quest)
-    {
-        var currentAdventurer = Script_QueueManager.Instance.GetCurrentAdventurer();
-        if (currentAdventurer != null)
-        {
-            Script_QuestManager.Instance.AssignQuestToAdventurer(quest.questId, currentAdventurer.data.adventurerId);
-            Script_AdventurerManager.Instance.MarkAdventurerAsBusy(currentAdventurer.data.adventurerId);
-        }
-    }
-
+   
 }

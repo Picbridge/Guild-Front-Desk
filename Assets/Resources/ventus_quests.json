@@ -1,7 +1,7 @@
 [
   {
     "name": "Timberbrook's Bandit Menace",
-    "description": "A bandit group has taken over the road to Timberbrook. Eliminate them to reopen safe travel.",
+    "description": "For weeks, travelers to Timberbrook have gone missing. Merchants whisper of masked raiders ambushing supply carts and dragging victims into the woods. Just yesterday, a bloodied draft horse returned alone. The town’s food stores are dwindling.\nTrack the raiders’ movements, infiltrate their forest camp, and eliminate their leader to restore safe passage and stability to the region.",
     "difficulty": "Easy",
     "type": "Elimination",
     "reward": 18,
@@ -9,7 +9,7 @@
   },
   {
     "name": "Eldhollow's Glowing Ruins",
-    "description": "The mayor of Eldhollow reports strange lights in nearby ruins. Survey the area and report back.",
+    "description": "In the dead of night, villagers near Eldhollow report strange lights flickering in the ruins north of town. Some say they hear voices calling from underground halls that should’ve collapsed long ago. The mayor fears ancient wards may have failed.\nTravel to the ruins, investigate the disturbance, and report your findings to the local magistrate.",
     "difficulty": "Easy",
     "type": "Exploration",
     "reward": 16,
@@ -17,7 +17,7 @@
   },
   {
     "name": "Merchant's Foxbeast Gauntlet",
-    "description": "A spice merchant needs an escort through foxbeast territory on the way to the city gates.",
+    "description": "A spice merchant returning from the southern dunes seeks protection through foxbeast territory near Ventus’ outskirts. The creatures have grown bold, attacking caravans in broad daylight.\nEscort the merchant safely to the city gates and fend off any ambushes along the way.",
     "difficulty": "Easy",
     "type": "Escort",
     "reward": 20,
@@ -25,7 +25,7 @@
   },
   {
     "name": "Westcliff's Stolen Ledger",
-    "description": "Thieves escaped with the tax ledger from Westcliff. Track them and bring it back intact.",
+    "description": "Thieves broke into the Westcliff magistrate’s office and escaped with the city’s tax ledger—one containing the names of high-profile debts and land transfers.\nFollow the trail through narrow gullies and market alleys, recover the stolen book, and return it before its contents are sold to the highest bidder.",
     "difficulty": "Easy",
     "type": "Retrieval",
     "reward": 15,
@@ -33,7 +33,7 @@
   },
   {
     "name": "Southfield's Ravaging Boar",
-    "description": "A massive boar is ravaging crops near Southfield farms. Bring it down before more damage is done.",
+    "description": "Fields outside Southfield lie in ruin. A massive, tusked boar has been tearing through farmland, scattering livestock and crushing fencing with reckless fury. Farmers refuse to work until it’s dealt with.\nLocate the beast, bring it down, and help restore peace to the harvest lands.",
     "difficulty": "Easy",
     "type": "Elimination",
     "reward": 14,
@@ -41,7 +41,7 @@
   },
   {
     "name": "Acolyte's Foggy Trail",
-    "description": "A young acolyte must reach the chapel across the foggy Whisperpine Trail. Escort them safely.",
+    "description": "A young acolyte must reach the chapel across the fog-shrouded Whisperpine Trail to complete her initiation. The forest path has become treacherous in recent weeks, with rumors of cloaked figures moving beneath the mist.\nEscort her safely to the chapel and ensure no harm befalls her on the sacred journey.",
     "difficulty": "Easy",
     "type": "Escort",
     "reward": 17,
@@ -49,7 +49,7 @@
   },
   {
     "name": "Mapping Forgotten Stream",
-    "description": "The cartographer's records are incomplete near the southern stream bend. Map it and mark hazards.",
+    "description": "The cartographer’s records show only blank parchment near the southern stream bend. Locals claim the area has shifted after heavy rains, revealing hidden forks and submerged hazards.\nNavigate the wild terrain, chart the updated stream layout, and mark any dangers for future travelers.",
     "difficulty": "Easy",
     "type": "Exploration",
     "reward": 12,
@@ -57,7 +57,7 @@
   },
   {
     "name": "Blacksmith's Lost Tools",
-    "description": "A local blacksmith dropped their traveling tools while fleeing wolves. Recover them near Hollowford trail.",
+    "description": "A blacksmith traveling between towns dropped his tools while fleeing a sudden wolf pack attack. He returned shaken and weaponless.\nHead to the Hollowford trail, locate the scattered tools, and retrieve them before they’re lost or stolen.",
     "difficulty": "Easy",
     "type": "Retrieval",
     "reward": 10,
@@ -65,7 +65,7 @@
   },
   {
     "name": "Burning Spider Nest",
-    "description": "A nest of venomous tree spiders threatens woodcutters north of Ventus. Burn it out.",
+    "description": "Woodcutters north of Ventus have abandoned their camps after encountering a nest of venomous tree spiders. The creatures have woven thick webs across logging paths and shelters.\nLocate the nest, ignite the core, and burn out the infestation to make the woods safe again.",
     "difficulty": "Easy",
     "type": "Elimination",
     "reward": 19,
@@ -73,7 +73,7 @@
   },
   {
     "name": "Healer's Plague Mission",
-    "description": "A plague has spread in the outpost of Ashvale. Protect the healer en route.",
+    "description": "A rare illness has spread across the outpost of Ashvale. The local healer requires an escort to reach the patients with her curatives intact. Bandits have been spotted nearby, and panic is rising.\nShield the healer during travel, defend her from roadside threats, and guide her safely to Ashvale so she can tend to the sick without delay.",
     "difficulty": "Easy",
     "type": "Escort",
     "reward": 20,
@@ -81,7 +81,7 @@
   },
   {
     "name": "Riverpath Ambushers",
-    "description": "Travelers report ambushes near the river crossing west of Ventus. Remove the threat.",
+    "description": "Merchant caravans and lone travelers have gone missing near the river crossing west of Ventus. Survivors speak of shadowy figures striking from behind rocks and reeds, vanishing with coin and cargo.\nScout the crossing, lure the ambushers into the open, and eliminate them to ensure safe passage resumes.",
     "difficulty": "Easy",
     "type": "Elimination",
     "reward": 17,
@@ -89,15 +89,15 @@
   },
   {
     "name": "Stonemason's Ravine Blueprints",
-    "description": "A stonemason dropped his only draft plans into a ravine while fleeing wolves. Retrieve it safely.",
+    "description": "While surveying terrain near Hollowford, a stonemason fled a sudden wolf attack and lost his blueprint scrolls in a ravine. The plans detail an upcoming trade bridge critical to Ventus’ western route.\nDescend the ravine, recover the scrolls intact, and return them before rival guilds intervene.",
     "difficulty": "Easy",
     "type": "Retrieval",
     "reward": 12,
     "duration": 2
   },
   {
-    "name": "Timber Caves' Echoes",
-    "description": "Scout the caves in Timberridge after strange echoes were heard during mining.",
+    "name": "Caves' Echoes",
+    "description": "Miners at Lorn Hollow reported unnatural echoes and halted operations after tools were thrown and lights extinguished without cause.\nEnter the caves, chart their interior paths, and determine whether these disturbances come from structural shifts—or something deeper.",
     "difficulty": "Easy",
     "type": "Exploration",
     "reward": 13,
@@ -105,7 +105,7 @@
   },
   {
     "name": "Scribe's Bandit Road",
-    "description": "A guild scribe must deliver records to Greenharbor. Bandits frequent the route—protect him.",
+    "description": "A guild scribe bearing sealed records for Greenharbor must travel along a stretch of road plagued by bandit sightings.\nGuide the scribe through dangerous crossings, shield him during moments of ambush, and defend the package until it reaches the receiving clerk.",
     "difficulty": "Easy",
     "type": "Escort",
     "reward": 18,
@@ -113,63 +113,23 @@
   },
   {
     "name": "Northwatch Wolf Hunt",
-    "description": "Wolves have descended from the hills and are killing livestock. Hunt them down.",
+    "description": "Wolves have descended from the frostline hills and begun attacking livestock and shepherds outside Northwatch.\nTrack their prints through snow and brush, locate the den, and bring down the pack before it grows bolder.",
     "difficulty": "Easy",
     "type": "Elimination",
     "reward": 15,
     "duration": 1
   },
   {
-    "name": "Riverbend's Lost Crate",
-    "description": "A merchant’s supply crate fell during a bridge collapse. Recover it before scavengers do.",
+    "name": "Elde river's Lost Crate",
+    "description": "A merchant’s supply crate was lost in a recent bridge collapse at Northbridge. The waters have receded, but scavengers now stalk the banks.\nSearch the river, retrieve the crate before looters reach it, and return it to its rightful owner.",
     "difficulty": "Easy",
     "type": "Retrieval",
     "reward": 13,
     "duration": 2
   },
   {
-    "name": "Abandoned Mill Mystery",
-    "description": "Unusual noises have been reported from the abandoned mill. Investigate and report findings.",
-    "difficulty": "Easy",
-    "type": "Exploration",
-    "reward": 14,
-    "duration": 3
-  },
-  {
-    "name": "Grain Caravan's Thorncat Threat",
-    "description": "A grain caravan must reach Ventus safely. Thorncats have been sighted in the area.",
-    "difficulty": "Easy",
-    "type": "Escort",
-    "reward": 20,
-    "duration": 2
-  },
-  {
-    "name": "Marsh Prowler Hunt",
-    "description": "A rare predator has been stalking villagers near the Dawnmarsh. Track and slay it.",
-    "difficulty": "Easy",
-    "type": "Elimination",
-    "reward": 19,
-    "duration": 2
-  },
-  {
-    "name": "Slide Valley Salvage",
-    "description": "A courier wagon tumbled down into Slide Valley. Salvage what's left of the mail bags.",
-    "difficulty": "Easy",
-    "type": "Retrieval",
-    "reward": 11,
-    "duration": 2
-  },
-  {
-    "name": "Artisan's Fair Escort",
-    "description": "A traveling artisan needs safe passage to Ashcroft for the midsummer fair.",
-    "difficulty": "Easy",
-    "type": "Escort",
-    "reward": 16,
-    "duration": 2
-  },
-  {
-    "name": "Marshgrove's Smoke Mystery",
-    "description": "Dark smoke rises from the bogs in Marshgrove. Explore the cause without engaging.",
+    "name": "Gravefield's Smoke Mystery",
+    "description": "Dense black smoke has begun to rise from the bogs in Gravefield, alarming nearby trappers. With no known campfires or settlements in that area, the Guild fears unnatural sources.\nNavigate the shifting wetlands, investigate the origin of the smoke, and report your findings before it spreads further.",
     "difficulty": "Easy",
     "type": "Exploration",
     "reward": 13,
@@ -177,23 +137,15 @@
   },
   {
     "name": "Guildhall Rat Purge",
-    "description": "The storage beneath the guildhall is overrun with rats. Clear them out completely.",
+    "description": "The storage cellars beneath Ventus Guildhall have become overrun with aggressive rats, likely driven upward by flooding tunnels. They’ve begun tearing into provisions and damaging sealed scrolls.\nDescend into the cellar, clear out the infestation, and reseal the vulnerable entrances.",
     "difficulty": "Easy",
     "type": "Elimination",
     "reward": 8,
     "duration": 1
   },
   {
-    "name": "Monastery Mail Delivery",
-    "description": "Courier couldn’t reach the cliffside monastery. Deliver the mail directly to the elders.",
-    "difficulty": "Easy",
-    "type": "Retrieval",
-    "reward": 14,
-    "duration": 2
-  },
-  {
     "name": "Herbalist's Thistleway Escort",
-    "description": "Help an apprentice gather herbs beyond the old Thistleway trail. She lacks defense skills.",
+    "description": "An apprentice herbalist seeks rare herbs in the brushlands beyond Thistleway Trail. She has knowledge but lacks defense skills.\nEscort her through overgrown terrain, shield her from wild beasts, and guide her back with a full satchel of gathered flora.",
     "difficulty": "Easy",
     "type": "Escort",
     "reward": 15,
@@ -201,7 +153,7 @@
   },
   {
     "name": "Ventus' Sunken Tunnels",
-    "description": "Strange water flow and lost tools suggest breaches in old underground tunnels. Map them.",
+    "description": "Tools and debris have vanished into the waterlogged tunnels beneath Ventus. Rumors suggest entire pathways have collapsed, revealing hidden chambers and flows.\nEnter the tunnels, chart submerged routes, and determine whether these changes are natural or engineered.",
     "difficulty": "Easy",
     "type": "Exploration",
     "reward": 17,
@@ -209,15 +161,55 @@
   },
   {
     "name": "Ridgewood's Hyenabeast Blockade",
-    "description": "Hyenabeasts have blocked trade between Ridgewood and Ventus. Eliminate the pack.",
+    "description": "Trade between Ridgewood and Ventus has halted due to a pack of hyenabeasts that have claimed the canyon pass. Their howls echo day and night, and scouts have gone missing.\nTrack the creatures through rocky terrain, bait them from their lair, and eliminate the pack to reopen the trade route.",
     "difficulty": "Easy",
     "type": "Elimination",
     "reward": 20,
     "duration": 2
   },
   {
+    "name": "Abandoned Mill Mystery",
+    "description": "Strange creaking and whispers have been reported from the long-abandoned mill east of Ventus. Locals refuse to go near it after dusk.\nApproach the structure, investigate the source of the disturbances, and report your findings to the Guild registry.",
+    "difficulty": "Easy",
+    "type": "Exploration",
+    "reward": 14,
+    "duration": 3
+  },
+  {
+    "name": "Grain Caravan's Thorncat Threat",
+    "description": "A grain caravan en route to Ventus must pass through thickets where thorncats have recently been spotted. These agile predators are known for swift ambushes.\nEscort the wagons, defend the caravan master, and guide them safely through to the city gates.",
+    "difficulty": "Easy",
+    "type": "Escort",
+    "reward": 20,
+    "duration": 2
+  },
+  {
+    "name": "Marsh Prowler Hunt",
+    "description": "Villagers near Dunmarch speak of a low growl in the reeds and missing livestock come morning. The culprit is a marsh prowler—a reclusive but lethal predator.\nTrack its movements at dawn and dusk, flush it from its lair, and slay it before it claims another victim.",
+    "difficulty": "Easy",
+    "type": "Elimination",
+    "reward": 19,
+    "duration": 2
+  },
+  {
+    "name": "Slide Valley Salvage",
+    "description": "After a courier wagon veered off the road into Slide Valley, sealed mailbags were scattered among the rubble. The slope is unstable, and local scavengers have already begun combing the wreck.\nDescend into the valley, locate the official parcels, and recover them before they’re tampered with.",
+    "difficulty": "Easy",
+    "type": "Retrieval",
+    "reward": 11,
+    "duration": 2
+  },
+  {
+    "name": "Artisan's Fair Escort",
+    "description": "A traveling artisan must reach Ashcroft in time for the midsummer fair to present her wares. The road, however, is filled with opportunists targeting festival merchants.\nShield her from danger, guide her through backroads if needed, and ensure she arrives safely with her goods intact.",
+    "difficulty": "Easy",
+    "type": "Escort",
+    "reward": 16,
+    "duration": 2
+  },
+  {
     "name": "Healer's Moss Retrieval",
-    "description": "A Ventus healer needs Glowing Rockmoss from caves near Ashvale. Gather and return it safely.",
+    "description": "Glowing Rockmoss, a vital alchemical reagent, grows in the moist caves near Ashvale. A Ventus healer has requested a fresh batch for her remedies.\nEnter the cavern network, harvest the moss under low light, and return it quickly before it loses potency.",
     "difficulty": "Easy",
     "type": "Retrieval",
     "reward": 15,
@@ -225,7 +217,7 @@
   },
   {
     "name": "Emberdell's Banner Escort",
-    "description": "The ceremonial banner must arrive intact for Emberdell’s yearly festival. Protect the courier.",
+    "description": "The ceremonial banner for Emberdell’s yearly festival must arrive undamaged. Bandits know its value, and mishandling would dishonor the event.\nEscort the courier, defend the relic during travel, and ensure it is unfurled with pride before the town square.",
     "difficulty": "Easy",
     "type": "Escort",
     "reward": 18,
@@ -233,15 +225,15 @@
   },
   {
     "name": "Collapsed Quarry Assessment",
-    "description": "After a recent collapse, assess whether the quarry can safely resume operation.",
+    "description": "Following a recent collapse, the quarry foreman has requested a neutral party to examine the damage and determine safety conditions.\nTraverse unstable slopes, evaluate structural integrity, and prepare a report for the Guild’s reconstruction team.",
     "difficulty": "Easy",
     "type": "Exploration",
     "reward": 12,
     "duration": 2
   },
   {
-    "name": "Bronzewood Mill Saboteurs",
-    "description": "Bronzewood’s grain mill has been repeatedly sabotaged. Track and eliminate the culprits.",
+    "name": "Timbewood Mill Saboteurs",
+    "description": "Bronzewood’s grain supply is under threat. The mill’s mechanisms have been sabotaged twice in one moon.\nInvestigate local tensions, track those responsible, and eliminate the saboteurs before the region faces famine.",
     "difficulty": "Normal",
     "type": "Elimination",
     "reward": 27,
@@ -249,7 +241,7 @@
   },
   {
     "name": "Envoy to Castle Embrance",
-    "description": "A diplomatic envoy must reach Castle Embrance for treaty talks. Ensure his safe arrival.",
+    "description": "A political envoy bearing treaty documents must reach Castle Embrance across contested lands.\nEscort him with discretion, shield him from opportunists, and ensure no party tampers with the message or his arrival.",
     "difficulty": "Normal",
     "type": "Escort",
     "reward": 30,
@@ -257,7 +249,7 @@
   },
   {
     "name": "Stonecoil's Lost Sunstone",
-    "description": "A miner dropped a valuable sunstone deep inside a serpent nest. Recover it intact.",
+    "description": "A miner lost a rare sunstone while fleeing serpents inside Stonecoil Den. The gem fell deep within a winding, venomous nest.\nBrave the caverns, recover the intact sunstone, and return it before rival hands seize it.",
     "difficulty": "Normal",
     "type": "Retrieval",
     "reward": 25,
@@ -265,7 +257,7 @@
   },
   {
     "name": "Salt Flats' Unnatural Movement",
-    "description": "Salt caravans have reported unnatural movement near the flats. Investigate and map the area.",
+    "description": "Salt caravans have noted unusual tremors and shifting paths through the Salt Flats. Strange fissures glow at night.\nSurvey the region thoroughly, chart new safe routes, and determine whether these movements are magical in nature.",
     "difficulty": "Normal",
     "type": "Exploration",
     "reward": 22,
@@ -273,23 +265,15 @@
   },
   {
     "name": "Observatory Ruins Expedition",
-    "description": "A royal scholar seeks to examine a collapsed observatory outside Ashcroft. Provide escort.",
+    "description": "A collapsed observatory near Ashcroft may still house ancient sky-charts. A royal scholar has requested safe passage to the site.\nEscort her across unstable terrain, defend her during excavation, and return with whatever knowledge survives.",
     "difficulty": "Normal",
     "type": "Escort",
     "reward": 29,
     "duration": 3
   },
   {
-    "name": "Ventus' Tunnel Thieves",
-    "description": "Ventus’ lower city tunnels harbor organized thieves. Remove their ringleader.",
-    "difficulty": "Normal",
-    "type": "Elimination",
-    "reward": 30,
-    "duration": 3
-  },
-  {
     "name": "Embervault's Stolen Charter",
-    "description": "The guild’s original charter scroll was sold under duress. Retrieve it from Embervault trader.",
+    "description": "The Guild's original charter was sold under duress by a desperate scribe. Now it lies within the possession of an Embervault trader who refuses to negotiate.\nTravel to the Embervault markets, recover the document by any means necessary, and return it to Guild custody.",
     "difficulty": "Normal",
     "type": "Retrieval",
     "reward": 26,
@@ -297,7 +281,7 @@
   },
   {
     "name": "Thornvale's Shifting Paths",
-    "description": "Thornvale’s terrain has shifted after a recent quake. Chart new paths through the region.",
+    "description": "Following a quake, Thornvale's terrain has shifted dramatically, rendering maps obsolete.\nTravel through the unstable valley, chart safe new routes, and record hazards so future caravans won’t be caught off guard.",
     "difficulty": "Normal",
     "type": "Exploration",
     "reward": 24,
@@ -305,7 +289,7 @@
   },
   {
     "name": "Prisoner to Southbridge",
-    "description": "A high-profile prisoner must be escorted from Ventus to Southbridge without incident.",
+    "description": "A high-profile prisoner must be escorted from Ventus to Southbridge for trial. Many wish to silence him en route.\nShield him from bounty hunters, guide the convoy through alternative paths, and ensure he stands trial alive.",
     "difficulty": "Normal",
     "type": "Escort",
     "reward": 27,
@@ -313,7 +297,7 @@
   },
   {
     "name": "Blackfen's Alpha Serpent",
-    "description": "Water travel through Blackfen has halted due to serpents. Kill the alpha and clear the waters.",
+    "description": "Water traffic through Blackfen has ceased due to a monstrous alpha serpent nesting in the reeds. Locate its lair by following drag trails and boat wreckage.\nEngage and eliminate the beast to reopen the waterways.",
     "difficulty": "Normal",
     "type": "Elimination",
     "reward": 28,
@@ -321,7 +305,7 @@
   },
   {
     "name": "Stolen Archive Scrolls",
-    "description": "A courier lost sensitive records during a highway robbery. Recover them before they're sold.",
+    "description": "A courier was ambushed on the highway, losing sensitive archive scrolls meant for preservation.\nTrack the thieves through roadside camps, recover the scrolls intact, and return them before their contents are copied or sold.",
     "difficulty": "Normal",
     "type": "Retrieval",
     "reward": 25,
@@ -329,23 +313,15 @@
   },
   {
     "name": "Ashen Ridge Faultline",
-    "description": "Recent tremors have opened a fault near Ashen Ridge. Survey for elemental breaches.",
+    "description": "Tremors near Ashen Ridge have exposed a glowing faultline. Rumors speak of elemental interference.\nInvestigate the breach site, document any anomalies, and report whether the ridge is safe to inhabit.",
     "difficulty": "Normal",
     "type": "Exploration",
     "reward": 23,
     "duration": 4
   },
   {
-    "name": "Windcaller's Bell Caravan",
-    "description": "A sacred bell must be transported to Windcaller Temple. Escort the caravan without delay.",
-    "difficulty": "Normal",
-    "type": "Escort",
-    "reward": 30,
-    "duration": 3
-  },
-  {
     "name": "Broken Hold Raiders",
-    "description": "A ruined outpost has become a den for raiders. Purge them and reclaim the area.",
+    "description": "The Broken Hold, a ruined outpost once abandoned, has become a raider stronghold.\nApproach with caution, assess their defenses, and purge the area to reclaim it for Guild use.",
     "difficulty": "Normal",
     "type": "Elimination",
     "reward": 29,
@@ -353,7 +329,7 @@
   },
   {
     "name": "Emberdell's Lost Taxes",
-    "description": "Emberdell’s tax documents were lost during river crossing. Retrieve them before inspection day.",
+    "description": "Emberdell’s tax records were lost during a river crossing when a guard was thrown from the ferry.\nRecover the sealed ledgers from the riverbank or nearby villages before they fall into criminal hands.",
     "difficulty": "Normal",
     "type": "Retrieval",
     "reward": 21,
@@ -361,7 +337,7 @@
   },
   {
     "name": "Goldwater Falls Caverns",
-    "description": "Fishermen reported strange light behind Goldwater Falls. Enter the caverns and investigate.",
+    "description": "Strange lights have been spotted behind Goldwater Falls. Locals fear a haunting, but miners suspect hidden crystals.\nEnter the caverns, investigate the source, and determine if it's natural or arcane.",
     "difficulty": "Normal",
     "type": "Exploration",
     "reward": 22,
@@ -369,7 +345,7 @@
   },
   {
     "name": "Frostvine Berry Escort",
-    "description": "A brewer seeks rare frostvine berries. Escort him through the dangerous woods.",
+    "description": "A brewer seeks rare frostvine berries found deep within the frostwoods.\nEscort him through predator-infested trails, shield him from danger, and guide him safely to the berry groves and back before dusk frost sets in.",
     "difficulty": "Normal",
     "type": "Escort",
     "reward": 26,
@@ -377,7 +353,7 @@
   },
   {
     "name": "Moonveil's Howling Pack",
-    "description": "A pack of howlers has been attacking supply carts. Hunt them along the Moonveil stretch.",
+    "description": "Supply carts traveling the Moonveil stretch have been attacked by a pack of organized howlers.\nSurvey the route at dusk, draw out the pack, and eliminate the threat before further trade disruptions occur.",
     "difficulty": "Normal",
     "type": "Elimination",
     "reward": 30,
@@ -385,7 +361,7 @@
   },
   {
     "name": "Church's Forgotten Relic",
-    "description": "A silver relic was left behind in a church now overrun by scavengers. Retrieve it safely.",
+    "description": "An ancient silver relic was left behind in a deconsecrated church now overrun by scavengers.\nEnter the crumbling sanctuary, locate the relic, and return it to the clergy before it’s sold to collectors.",
     "difficulty": "Normal",
     "type": "Retrieval",
     "reward": 24,
@@ -393,23 +369,15 @@
   },
   {
     "name": "Eastern Bluffs Survey",
-    "description": "Guild geologists need a hazard report from the Eastern Bluffs. Survey thoroughly.",
+    "description": "Guild geologists require updated assessments of the Eastern Bluffs after recent landslides.\nScale the cliffs, take hazard readings, and record structural weaknesses to prevent future collapses.",
     "difficulty": "Normal",
     "type": "Exploration",
     "reward": 20,
     "duration": 3
   },
   {
-    "name": "Lake Thernas Scouts",
-    "description": "Support a scout unit traveling to Lake Thernas for border monitoring duties.",
-    "difficulty": "Normal",
-    "type": "Escort",
-    "reward": 29,
-    "duration": 3
-  },
-  {
     "name": "Merchant Row Smugglers",
-    "description": "A smuggler ring uses tunnels below Merchant Row. Locate and clear their hideout.",
+    "description": "Smugglers have turned the old tunnels beneath Merchant Row into a covert hideout.\nInfiltrate the underground network, identify key figures, and dismantle their operations before their next shipment moves.",
     "difficulty": "Normal",
     "type": "Elimination",
     "reward": 28,
@@ -417,15 +385,15 @@
   },
   {
     "name": "Stolen Mining Documents",
-    "description": "Prospecting documents were stolen from a Ventus mining office. Retrieve before rival guilds obtain them.",
+    "description": "Prospecting records critical to mining operations were stolen from the Ventus office.\nTrack the culprits to their hideout, retrieve the documents without damage, and return them before rival guilds capitalize on the loss.",
     "difficulty": "Normal",
     "type": "Retrieval",
     "reward": 25,
     "duration": 2
   },
   {
-    "name": "Cloudmere's Hidden Basin",
-    "description": "A local hunter claims to have found a basin that doesn't appear on maps. Verify and sketch.",
+    "name": "Stormglen's Hidden Basin",
+    "description": "A hunter claims to have discovered an uncharted basin in Stormglen, rich with rare flora.\nVerify the location, sketch detailed maps, and assess whether the basin should be protected or harvested.",
     "difficulty": "Normal",
     "type": "Exploration",
     "reward": 22,
@@ -433,7 +401,7 @@
   },
   {
     "name": "Twin Caravans to Hearthpost",
-    "description": "Two allied caravans must reach Hearthpost together. Ensure both arrive without losses.",
+    "description": "Two allied caravans must reach Hearthpost together, but recent threats demand a coordinated escort.\nGuide both caravans across multiple checkpoints, defend against ambushes, and ensure no stragglers are lost en route.",
     "difficulty": "Normal",
     "type": "Escort",
     "reward": 30,
@@ -441,7 +409,7 @@
   },
   {
     "name": "Snakefang Gang Takedown",
-    "description": "The Snakefang gang has resurged in Dunmarch. Strike fast and dismantle their base.",
+    "description": "The Snakefang gang has resurfaced in Dunmarch and fortified their position.\nLaunch a preemptive strike, breach their stronghold, and dismantle the gang before their influence spreads.",
     "difficulty": "Normal",
     "type": "Elimination",
     "reward": 30,
@@ -449,7 +417,7 @@
   },
   {
     "name": "Gravefield's Oathblade",
-    "description": "An oathblade was stolen from its resting place. Recover it before it becomes a symbol to raiders.",
+    "description": "An ancient Oathblade, a symbol of peace, has been stolen from its resting place in Gravefield. Raiders may attempt to wield it as a rallying symbol.\nTrack the thieves across the badlands, recover the relic, and ensure it is returned to hallowed ground.",
     "difficulty": "Normal",
     "type": "Retrieval",
     "reward": 27,
@@ -457,7 +425,7 @@
   },
   {
     "name": "Windswept Range Mapping",
-    "description": "High winds reveal possible new mountain passes. Climb and chart the Windswept Range routes.",
+    "description": "Powerful winds have shifted snowcaps and exposed new routes in the Windswept Range.\nClimb these treacherous paths, chart new passes, and log potential hazards before future expeditions attempt the crossing.",
     "difficulty": "Normal",
     "type": "Exploration",
     "reward": 25,
@@ -465,7 +433,7 @@
   },
   {
     "name": "Bard's Cragspire Journey",
-    "description": "A bard claiming knowledge of old songs seeks protection on his journey to Cragspire.",
+    "description": "A bard claiming to know ancient melodies lost to time is bound for Cragspire.\nEscort him through rough country, defend him from bandits drawn to his lavish gear, and ensure he delivers his songs to the archive.",
     "difficulty": "Normal",
     "type": "Escort",
     "reward": 27,
@@ -473,7 +441,7 @@
   },
   {
     "name": "Burnt Hollow's Wyrmspawn",
-    "description": "A clutch of wyrmspawn has emerged in Burnt Hollow. Slay them before they mature.",
+    "description": "Reports of scorched livestock and twisted trees point to a wyrmspawn clutch emerging in Burnt Hollow.\nTrack the hatchlings’ trail, eliminate them before they mature, and destroy the nest if it remains intact.",
     "difficulty": "Hard",
     "type": "Elimination",
     "reward": 48,
@@ -481,15 +449,15 @@
   },
   {
     "name": "Starlight Compass Retrieval",
-    "description": "The last working starlight compass lies within a sealed ruin. Recover it for navigation efforts.",
+    "description": "The last functioning starlight compass, an invaluable navigational tool, lies deep within a sealed ruin.\nNavigate old warding traps, locate the device, and retrieve it without damaging its delicate mechanism.",
     "difficulty": "Hard",
     "type": "Retrieval",
     "reward": 44,
     "duration": 4
   },
   {
-    "name": "Magistrate's Ironroot Escort",
-    "description": "The magistrate must reach a summit in the north. The pass is prone to ambush—protect her.",
+    "name": "Magistrate's Southbridge Escort",
+    "description": "The magistrate must reach a summit in Southbridge to preside over a critical hearing. The route is plagued by known ambushers.\nGuard her carriage, anticipate threats, and ensure her arrival without political delay.",
     "difficulty": "Hard",
     "type": "Escort",
     "reward": 50,
@@ -497,7 +465,7 @@
   },
   {
     "name": "Flintspire Chasm Depths",
-    "description": "No one has returned from the lowest level of Flintspire Chasm. Explore and report back.",
+    "description": "No one has returned from the lowest levels of Flintspire Chasm. Strange lights and rumbling sounds continue to emerge.\nDescend the chasm with caution, explore the depths, and return with whatever truths are buried below.",
     "difficulty": "Hard",
     "type": "Exploration",
     "reward": 42,
@@ -505,7 +473,7 @@
   },
   {
     "name": "Stoneway's Basilisk Hunt",
-    "description": "A basilisk has petrified livestock near Stoneway. Track and kill the beast.",
+    "description": "Livestock have turned to stone outside Stoneway. A basilisk is on the prowl.\nTrack the beast by its trail of petrified remnants, engage it without meeting its gaze, and slay it before it reaches populated areas.",
     "difficulty": "Hard",
     "type": "Elimination",
     "reward": 47,
@@ -513,7 +481,7 @@
   },
   {
     "name": "Stonevale's Banner Recovery",
-    "description": "Stonevale’s war banner was stolen in a skirmish. Recover it from enemy-held ground.",
+    "description": "Stonevale’s war banner was captured during a recent skirmish. The enemy now flaunts it at their camp’s entrance.\nInfiltrate the site, retrieve the banner, and return it before morale in Stonevale breaks.",
     "difficulty": "Hard",
     "type": "Retrieval",
     "reward": 49,
@@ -521,7 +489,7 @@
   },
   {
     "name": "Goldenhold's Archive Delivery",
-    "description": "A sacred archive must be delivered to Goldenhold under heavy risk. Guard it with your life.",
+    "description": "A sacred archive must be delivered to Goldenhold for sealing in their Grand Vault. Bandits and relic hunters are aware of its route.\nShield the convoy, repel any attacks, and ensure the scrolls reach the archivist untouched.",
     "difficulty": "Hard",
     "type": "Escort",
     "reward": 45,
@@ -529,15 +497,15 @@
   },
   {
     "name": "Blightscar Expanse Survey",
-    "description": "The ground east of Ventus has begun to rot unnaturally. Investigate and chart its spread.",
+    "description": "The earth east of Ventus has begun to rot unnaturally. The blight spreads daily, devouring soil and stunting growth.\nSurvey the area’s edge, chart its advance, and report whether magical interference is to blame.",
     "difficulty": "Hard",
     "type": "Exploration",
     "reward": 43,
     "duration": 6
   },
   {
-    "name": "Dustmere Outpost Siege",
-    "description": "A small outpost is under siege by enemy scouts. Lead a strike to disrupt the attackers.",
+    "name": "Southwatch Outpost Siege",
+    "description": "Enemy scouts have surrounded the Southwatch Outpost. Supplies are running low, and the garrison cannot hold.\nLead a strike force, disrupt the attackers’ formation, and provide a path for reinforcements to arrive.",
     "difficulty": "Hard",
     "type": "Elimination",
     "reward": 50,
@@ -545,7 +513,7 @@
   },
   {
     "name": "Firevault's Ancient Map",
-    "description": "A historic map lies deep in the fire-heated vaults of Embervault. Retrieve it without damage.",
+    "description": "Deep within the burning vaults of Embervault lies a historic map said to lead to forgotten ruins.\nBrave the blistering heat, bypass collapsed passages, and retrieve the artifact intact.",
     "difficulty": "Hard",
     "type": "Retrieval",
     "reward": 46,
@@ -553,7 +521,7 @@
   },
   {
     "name": "High Council's Urgent Report",
-    "description": "A sealed report must be delivered to the High Council before nightfall. Avoid all detection.",
+    "description": "A sealed report must reach the High Council before nightfall, bypassing all known patrols.\nTravel by shadow, evade detection, and deliver the message directly to the Speaker’s hand.",
     "difficulty": "Hard",
     "type": "Escort",
     "reward": 50,
@@ -561,7 +529,7 @@
   },
   {
     "name": "Derathal's Whispering Mines",
-    "description": "The closed mines echo with voices. Enter and find the source, if any survive.",
+    "description": "Voices echo from the long-closed mines of Derathal—too clearly for wind.\nDescend into the dark, document any signs of life or arcane residue, and determine if the mine should remain sealed or cleansed.",
     "difficulty": "Hard",
     "type": "Exploration",
     "reward": 41,
@@ -569,7 +537,7 @@
   },
   {
     "name": "Greenglade's Forest Maw",
-    "description": "A plant-like predator swallows hunters whole in Greenglade. Track and destroy it.",
+    "description": "Hunters speak of a carnivorous bloom devouring creatures whole in Greenglade.\nTrack the vines back to their source, destroy the Forest Maw, and ensure no spore remains to spread.",
     "difficulty": "Hard",
     "type": "Elimination",
     "reward": 48,
@@ -577,7 +545,7 @@
   },
   {
     "name": "Sealed Book Retrieval",
-    "description": "A sealed tome containing nobility lineages has gone missing. Recover it discreetly.",
+    "description": "A sealed tome containing noble bloodline secrets has gone missing.\nTrack its last known holder, retrieve it quietly, and return it without drawing attention to its existence.",
     "difficulty": "Hard",
     "type": "Retrieval",
     "reward": 45,
@@ -585,15 +553,15 @@
   },
   {
     "name": "Frostwatch Avalanche Aid",
-    "description": "Frostwatch is in crisis after an avalanche. Escort the medics and protect their supplies.",
+    "description": "Frostwatch lies buried under an avalanche.\nEscort the medics and their supply sleds across unstable snowfields, defend them from wolves and exposure, and help establish a temporary field post.",
     "difficulty": "Hard",
     "type": "Escort",
     "reward": 50,
     "duration": 6
   },
   {
-    "name": "Northdeep's Shattered Altar",
-    "description": "An old altar has cracked open near Northdeep, leaking heat. Investigate with caution.",
+    "name": "Shattered Altar",
+    "description": "A sacred altar near Brimwell Abby has cracked open, leaking waves of heat.\nInvestigate the cause, determine whether a fire elemental breach is underway, and seal the site if necessary.",
     "difficulty": "Hard",
     "type": "Exploration",
     "reward": 42,
@@ -601,7 +569,7 @@
   },
   {
     "name": "Quarry Barrens Gang",
-    "description": "A vicious gang has claimed the quarry barrens. Clear them out to resume mining.",
+    "description": "A vicious gang has overtaken the quarry barrens, halting stone delivery for rebuilding efforts.\nInfiltrate the area, dismantle their leadership, and secure the quarry so workers can return safely.",
     "difficulty": "Hard",
     "type": "Elimination",
     "reward": 49,
@@ -609,7 +577,7 @@
   },
   {
     "name": "Vaultcrack's Lost Ledgers",
-    "description": "Records of debt and ownership fell into the Vaultcrack fissure. Climb down and recover them.",
+    "description": "During a tremor, vital records of land ownership and debt fell into the depths of the Vaultcrack fissure.\nNavigate the unstable descent, retrieve the sealed ledgers, and return before shifting stone seals off the lower chamber.",
     "difficulty": "Hard",
     "type": "Retrieval",
     "reward": 44,
@@ -617,7 +585,7 @@
   },
   {
     "name": "Summit Lighthouse Delivery",
-    "description": "An alchemical lens must reach the lighthouse at Summit Hill. Its loss would blind the coast.",
+    "description": "An alchemical lens critical to Summit Hill’s lighthouse has been delayed. Without it, the coast will remain blind at nightfall.\nEscort the shipment through narrow cliff paths, defend it from opportunists, and install it if necessary.",
     "difficulty": "Hard",
     "type": "Escort",
     "reward": 47,
@@ -625,7 +593,7 @@
   },
   {
     "name": "Lorn Hollow Caves",
-    "description": "Lorn Hollow’s caves are expanding unnaturally. Map their growth before they reach farmland.",
+    "description": "The caves near Lorn Hollow are expanding at an unnatural rate, threatening nearby farmland.\nExplore the tunnels, map their growth, and assess whether a magical source is accelerating the spread.",
     "difficulty": "Hard",
     "type": "Exploration",
     "reward": 43,
@@ -633,7 +601,7 @@
   },
   {
     "name": "War-Torn Escort",
-    "description": "Guard a high-value individual through war-torn land to reach their destination.",
+    "description": "A noble and their entourage must cross through a war-torn region to reach a diplomatic summit.\nShield them from crossfire, guide the group along safer woodland trails, and ensure their survival above all else.",
     "difficulty": "Deadly",
     "type": "Escort",
     "reward": 55,
@@ -641,7 +609,7 @@
   },
   {
     "name": "Suncaller's Deadly Threat",
-    "description": "Wipe out a powerful threat endangering nearby settlements. No survivors expected.",
+    "description": "A powerful creature awakened by ancient rites threatens several frontier settlements.\nAssemble a strike team, track its lair through scorched earth, and eliminate the threat with no quarter given.",
     "difficulty": "Deadly",
     "type": "Elimination",
     "reward": 65,
@@ -649,7 +617,7 @@
   },
   {
     "name": "Red Knight's Forbidden Zone",
-    "description": "Enter the forbidden zone and chart it. Previous expeditions failed to return.",
+    "description": "The Forbidden Zone, once sealed by the Red Knight Order, now pulses with arcane signatures.\nChart the terrain, document anomalies, and return with insight before the zone expands further.",
     "difficulty": "Deadly",
     "type": "Exploration",
     "reward": 51,
@@ -657,7 +625,7 @@
   },
   {
     "name": "Frostmaw's Perilous Escort",
-    "description": "Guard a high-value individual through war-torn land to reach their destination.",
+    "description": "Guide a high-value envoy through Frostmaw Pass—now overrun with territorial beastfolk.\nTravel discreetly, defend during skirmishes, and ensure no diplomatic secrets are lost if the mission fails.",
     "difficulty": "Deadly",
     "type": "Escort",
     "reward": 58,
@@ -665,7 +633,7 @@
   },
   {
     "name": "Veilwatcher's Silent Elimination",
-    "description": "Infiltrate hostile territory and eliminate the marked target without raising alarm.",
+    "description": "A marked target hides in fortified enemy territory. Infiltrate quietly, bypass all alarms, and eliminate the target without alerting surrounding forces.\nNo survivors, no sound.",
     "difficulty": "Deadly",
     "type": "Assassination",
     "reward": 45,
@@ -673,7 +641,7 @@
   },
   {
     "name": "Starblade's Guarded Journey",
-    "description": "Guard a high-value individual through war-torn land to reach their destination.",
+    "description": "The bearer of the Starblade, a living artifact, must reach the capital before the solstice.\nEscort him through contested lands, repel all interference, and ensure blade and bearer remain united.",
     "difficulty": "Deadly",
     "type": "Escort",
     "reward": 68,
@@ -681,7 +649,7 @@
   },
   {
     "name": "Enemy Ruins Artifact",
-    "description": "Recover an irreplaceable artifact buried deep in enemy-controlled ruins.",
+    "description": "An irreplaceable artifact lies hidden within enemy-occupied ruins.\nInfiltrate their excavation, bypass arcane wards, and extract the relic before it is defiled or destroyed.",
     "difficulty": "Deadly",
     "type": "Retrieval",
     "reward": 67,
@@ -689,7 +657,7 @@
   },
   {
     "name": "Frostmaw's Forbidden Exploration",
-    "description": "Enter the forbidden zone and chart it. Previous expeditions failed to return.",
+    "description": "A section of the forbidden Frostmaw region is thawing, revealing ruins and buried magic.\nChart the terrain while avoiding the lingering ice spirits, collect any recoverable artifacts, and return before the fog seals the path again.",
     "difficulty": "Deadly",
     "type": "Exploration",
     "reward": 57,
@@ -697,7 +665,7 @@
   },
   {
     "name": "Blood Hunter's Escort",
-    "description": "Guard a high-value individual through war-torn land to reach their destination.",
+    "description": "A Blood Hunter on assignment carries knowledge too dangerous to fall into enemy hands.\nEscort him through hostile terrain, defend him without drawing attention, and guarantee that neither the mission nor the man is compromised.",
     "difficulty": "Deadly",
     "type": "Escort",
     "reward": 48,
@@ -705,10 +673,90 @@
   },
   {
     "name": "Blood Hunter's Elimination",
-    "description": "Wipe out a powerful threat endangering nearby settlements. No survivors expected.",
+    "description": "The Blood Hunter now targets a legendary beast threatening border patrols.\nJoin him, assist in flushing the beast from hiding, and ensure its utter destruction—no corpse, no return.",
     "difficulty": "Deadly",
     "type": "Elimination",
     "reward": 54,
     "duration": 5
+  },
+  {
+    "name": "Crimson Thicket Watch",
+    "description": "Travelers crossing the Crimson Thicket have vanished without a trace. The foliage has grown unusually thick, muffling sound and swallowing light.\nEnter the overgrown path, investigate the disappearances, and uncover what stalks beneath the brush.",
+    "difficulty": "Normal",
+    "type": "Exploration",
+    "reward": 24,
+    "duration": 3
+  },
+  {
+    "name": "Ashvale Apothecary's Burden",
+    "description": "An elderly apothecary carrying experimental cures must reach the Ashvale hospice before the outbreak worsens.\nEscort her through uneven mountain passes, protect her from local wildlife, and keep the satchels unshaken.",
+    "difficulty": "Hard",
+    "type": "Escort",
+    "reward": 40,
+    "duration": 5
+  },
+  {
+    "name": "Shadowroot Assassination",
+    "description": "The Guild has marked a traitor meeting with foreign agents beneath the Shadowroot Canopy.\nInfiltrate the meeting unseen, confirm the target, and execute the sentence with precision—no witnesses, no survivors.",
+    "difficulty": "Deadly",
+    "type": "Assassination",
+    "reward": 52,
+    "duration": 6
+  },
+  {
+    "name": "Brimwell's Shattered Reliquary",
+    "description": "A tremor has cracked open the old reliquary beneath Brimwell Abbey, scattering holy relics among debris and spirits.\nRecover what remains, pacify any restless souls, and reseal the chamber before more awaken.",
+    "difficulty": "Hard",
+    "type": "Retrieval",
+    "reward": 45,
+    "duration": 4
+  },
+  {
+    "name": "Hollowpine Smuggler Route",
+    "description": "A recently unearthed tunnel beneath Hollowpine appears to be an active smuggler’s route.\nMap the tunnel system, disable any hidden traps or signal markers, and determine whether it links to larger operations.",
+    "difficulty": "Normal",
+    "type": "Exploration",
+    "reward": 26,
+    "duration": 3
+  },
+  {
+    "name": "Beacon of the Southwatch",
+    "description": "The beacon atop Southwatch has gone dark for the first time in decades. A lone flamekeeper was stationed there.\nAscend the mountain trail, uncover what befell the tower, and reignite the signal—no matter what you find.",
+    "difficulty": "Hard",
+    "type": "Exploration",
+    "reward": 43,
+    "duration": 5
+  },
+  {
+    "name": "Riftcaller's Final Rite",
+    "description": "A Riftcaller has requested a guard detail for her final rite—sealing a breach in reality near Stormglen.\nEscort her to the rupture site, defend the ceremony from extraplanar threats, and ensure the ritual concludes.",
+    "difficulty": "Deadly",
+    "type": "Escort",
+    "reward": 60,
+    "duration": 6
+  },
+  {
+    "name": "Westcliff Ambush Reprisal",
+    "description": "A trade envoy was slain en route to Westcliff. The killers left no survivors.\nTrack the attackers through wind-stripped plains, identify their hideout, and make an example that will echo beyond the borders.",
+    "difficulty": "Normal",
+    "type": "Elimination",
+    "reward": 28,
+    "duration": 3
+  },
+  {
+    "name": "Whisperglass Courier Recovery",
+    "description": "A courier transporting Whisperglass shards—a component of secure communications—has vanished. The last signal came from near the Cloudbreak Plateau.\nLocate the wreck, recover the shards, and ensure no transmissions were intercepted.",
+    "difficulty": "Hard",
+    "type": "Retrieval",
+    "reward": 46,
+    "duration": 4
+  },
+  {
+    "name": "Embervault's Emberwolf Pack",
+    "description": "A pack of emberwolves has descended from the volcanic ridges, attacking cattle and torching sheds.\nFollow their trails of scorched earth, engage the alpha, and eliminate the threat before they reach the town proper.",
+    "difficulty": "Hard",
+    "type": "Elimination",
+    "reward": 47,
+    "duration": 4
   }
 ]

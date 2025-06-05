@@ -209,8 +209,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Retrieve Stonemason's Blueprints from Ravine
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b3d64561d2b9c294d922f2ddecf4c08b, type: 2}
-  m_sharedMaterial: {fileID: -6940351778935525803, guid: b3d64561d2b9c294d922f2ddecf4c08b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: da8f6bccc1de8714db7ddf77e020a1d0, type: 2}
+  m_sharedMaterial: {fileID: 9032010077692584496, guid: da8f6bccc1de8714db7ddf77e020a1d0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
